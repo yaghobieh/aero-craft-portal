@@ -1,0 +1,43 @@
+---
+description: AeroCraft portal structure
+alwaysApply: true
+---
+
+# AeroCraft Portal Structure
+
+```
+src/
+  components/
+    ComponentName/
+      ComponentName.tsx   — one component
+      index.ts            — barrel
+  constants/
+    numbers.const.ts      — TOPBAR_HEIGHT_PX, MAX_CONTENT_WIDTH_PX, etc.
+    routes.const.ts       — ROUTES, URLs, AEROCRAFT_VERSION
+    theme.const.ts        — BEAR_THEME, AC_PRIMARY, etc.
+    index.ts
+  i18n/
+    types.ts              — Messages interface, Locale type
+    en.ts                 — English messages
+    es.ts                 — Spanish messages
+    index.ts              — useI18n, useI18nState, I18nContext
+  pages/
+    PageName/
+      PageName.tsx        — one page component
+      index.ts
+  shims/
+    vue-stub.ts           — stub for Bear's Vue peer dep
+  styles/
+    index.css             — Tailwind + global resets
+  App.tsx                 — BearProvider + Router + AppBar + Sidebar
+  main.tsx                — createRoot
+```
+
+## Routing
+- All routes defined as constants in `ROUTES` object in `routes.const.ts`
+- Use `Route`, `Router`, `Link`, `useLocation` from `@forgedevstack/forge-compass`
+
+## i18n
+- All user-facing text keyed in `Messages` interface
+- Never write UI strings directly in components — always `t.key`
+- Locale stored in `localStorage` key `ac-locale`

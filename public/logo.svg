@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="48" viewBox="0 0 200 48" fill="none">
+  <defs>
+    <linearGradient id="acg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#acg)" d="M8 36V12L22 4l14 8v24l-14 8-14-8zm14-26L12 14v20l10 5.7 10-5.7V14L22 10z"/>
+  <path fill="url(#acg)" d="M22 18 30 22.5v9L22 36l-8-4.5v-9L22 18z" opacity=".85"/>
+  <text x="48" y="32" fill="#0f172a" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="22" font-weight="800" letter-spacing="-0.02em">AeroCraft</text>
+</svg>

@@ -1,0 +1,28 @@
+---
+description: AeroCraft portal code style
+globs: src/**/*.{ts,tsx}
+alwaysApply: true
+---
+
+# AeroCraft Portal Code Style
+
+## Component Rules
+- One component per `.tsx` file — no exceptions
+- No inline styles — use Bear `bearStyled`, Provider, or Tailwind classes only
+- No magic numbers — extract to `numbers.const.ts`
+- No hardcoded strings — all UI text must go through i18n (`useI18n()`)
+
+## File Responsibilities
+- `*.types.ts` — interfaces and type aliases only
+- `*.const.ts` — constants, numbers, strings
+- `*.tsx` — single React component
+
+## Imports
+- `import type` for all type-only imports
+- Path aliases: `@/*`, `@types/*`, `@const/*`, `@i18n/*`, `@pages/*`, `@components/*`
+- No `../../` relative paths when an alias is available
+
+## Bear Components Only
+- Use Bear for all UI: `Card`, `Typography`, `Button`, `Flex`, `Badge`, `Divider`, `Input`, `Tabs`, `AppBar`, `Sidebar`, `Dropdown`, `Chip`, `Alert`, `Spinner`
+- Colors via `BearProvider` theme — never hardcode color values inline
+- No raw `<div>` for layout — use `<Flex>` or `<Card>`

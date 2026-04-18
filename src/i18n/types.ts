@@ -1,0 +1,266 @@
+export type Locale = 'en' | 'es';
+
+export type DocsSitePage = {
+  title: string;
+  lead: string;
+  sections: { title: string; body: string }[];
+  codeBlocks?: { title?: string; code: string; language: string }[];
+  shortcuts: { example: string; note: string }[];
+};
+
+export interface Messages {
+  nav: {
+    home: string;
+    docs: string;
+    changelog: string;
+    github: string;
+    sandbox: string;
+    studio: string;
+  };
+  sidebar: {
+    ecosystem: string;
+    menu: string;
+  };
+  hero: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    ctaStart: string;
+    ctaDocs: string;
+    ctaSandbox: string;
+    ctaStudio: string;
+    version: string;
+  };
+  homeShowcase: {
+    colorsTitle: string;
+    colorsLead: string;
+    primaryScale: string;
+    secondaryScale: string;
+    gridTitle: string;
+    gridLead: string;
+    gridCellA: string;
+    gridCellB: string;
+    gridCellC: string;
+    motionTitle: string;
+    motionLead: string;
+    motionHint: string;
+    motionCard: string;
+    motionCta: string;
+    cascadeTitle: string;
+    cascadeLead: string;
+    cascadeCode: string;
+    cascadeDoc: string;
+    openSandbox: string;
+  };
+  sandbox: {
+    title: string;
+    lead: string;
+    back: string;
+    editor: string;
+    preview: string;
+  };
+  studio: {
+    title: string;
+    lead: string;
+    back: string;
+    reset: string;
+    controls: string;
+    preview: string;
+    previewLabel: string;
+    code: string;
+    panelFlex: string;
+    panelGrid: string;
+    panelGapSpacing: string;
+    panelSize: string;
+    panelPosition: string;
+    panelDisplayOverflow: string;
+    panelMotion: string;
+    panelInteractive: string;
+  };
+  features: {
+    title: string;
+    subtitle: string;
+    items: {
+      shortcuts: { title: string; desc: string };
+      prefix: { title: string; desc: string };
+      framework: { title: string; desc: string };
+      spacing: { title: string; desc: string };
+      postcss: { title: string; desc: string };
+      types: { title: string; desc: string };
+    };
+  };
+  quickStart: {
+    title: string;
+    subtitle: string;
+    step1: { title: string; desc: string };
+    step2: { title: string; desc: string };
+    step3: { title: string; desc: string };
+  };
+  docs: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    overview: string;
+    browseDocs: string;
+    exampleMarkup: string;
+    sidebarTitle: string;
+    guidesLabel: string;
+    referenceLabel: string;
+    prefixLabel: string;
+    separatorLabel: string;
+    prefixHint: string;
+    exampleTitle: string;
+    responsiveTitle: string;
+    responsiveBody: string;
+    responsiveNote: string;
+    bpName: string;
+    bpMin: string;
+    bpExample: string;
+    customValuesTitle: string;
+    customValuesBody: string;
+    notFound: string;
+    backToOverview: string;
+    taxonomyTitle: string;
+    taxonomyLead: string;
+    taxonomyColumnArea: string;
+    taxonomyColumnNote: string;
+    taxonomy: { area: string; note: string }[];
+    guides: {
+      cascadeLayers: { title: string; lead: string; code: string; paragraphs: string[] };
+      transitions: { title: string; lead: string; code: string; paragraphs: string[] };
+      themeColors: { title: string; lead: string; code: string; paragraphs: string[] };
+    };
+    groups: {
+      flex: string;
+      grid: string;
+      position: string;
+      size: string;
+      spacing: string;
+      gap: string;
+      text: string;
+      display: string;
+      overflow: string;
+      cursor: string;
+      transition: string;
+      interactive: string;
+    };
+    columns: {
+      shortcut: string;
+      cssOutput: string;
+      description: string;
+    };
+    prefix: string;
+    subsections: {
+      direction: string;
+      centering: string;
+      align: string;
+      justify: string;
+      wrap: string;
+      flexSizing: string;
+      flexBasis: string;
+      flexJustify: string;
+      flexItems: string;
+      flexSelf: string;
+      flexContent: string;
+      flexOrder: string;
+      justifyGroups: string;
+      other: string;
+      sizeWidth: string;
+      sizeHeight: string;
+      sizeMinWidth: string;
+      sizeMaxWidth: string;
+      sizeMinHeight: string;
+      sizeMaxHeight: string;
+      gridLayout: string;
+      gridColumns: string;
+      absolute: string;
+      fixed: string;
+      sticky: string;
+      sizeCombined: string;
+      sizeWidthHeight: string;
+      truncate: string;
+      textWrap: string;
+      lineClamp: string;
+      blockFlow: string;
+      inlineLayout: string;
+      a11y: string;
+      overflowAll: string;
+      overflowAxis: string;
+      cursorAll: string;
+      transitionTiming: string;
+      transitionProperty: string;
+      pointerEvents: string;
+      userSelect: string;
+      focusChrome: string;
+      paddingAll: string;
+      paddingAxis: string;
+      paddingSides: string;
+      marginAll: string;
+      marginAxis: string;
+      marginSides: string;
+      marginAuto: string;
+      gapAll: string;
+      gapAxis: string;
+    };
+    regularCssTitle: string;
+    arbitraryClassesTitle: string;
+    arbitraryExplainer: string;
+  };
+  homeLanding: {
+    aboutTitle: string;
+    aboutLead: string;
+    videoTitle: string;
+    videoLead: string;
+    cliTitle: string;
+    cliLead: string;
+    cliCode: string;
+    linkDocs: string;
+    npmTagline: string;
+  };
+  getStarted: {
+    title: string;
+    install: { title: string };
+    setup: { title: string };
+    usage: { title: string };
+    modes: {
+      title: string;
+      apply: string;
+      standalone: string;
+    };
+    cli: { title: string; body: string };
+  };
+  changelog: {
+    title: string;
+    initial: string;
+  };
+  footer: {
+    partOf: string;
+    license: string;
+  };
+  docsNav: Record<string, string>;
+  docsSite: Record<string, DocsSitePage>;
+  docsProperty: {
+    lead: string;
+    shortcutsCaption: string;
+    exampleCol: string;
+    noteCol: string;
+    rowArbitrary: string;
+    rowResponsive: string;
+    rowColor: string;
+    rowFont: string;
+  };
+  commandPalette: {
+    open: string;
+    placeholder: string;
+    empty: string;
+    portalPages: string;
+    hint: string;
+  };
+  homeExamples: {
+    title: string;
+    subtitle: string;
+    buttonTitle: string;
+    carouselTitle: string;
+    navbarTitle: string;
+  };
+}

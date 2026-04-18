@@ -1,0 +1,117 @@
+@aerocraft;
+
+.bear-dark {
+  --bear-bg-primary: #140c1c;
+  --bear-bg-secondary: #1c1226;
+  --bear-bg-tertiary: #261830;
+  --bear-border-default: #2e1f3a;
+  --bear-border-subtle: rgba(255, 255, 255, 0.06);
+  --bear-text-primary: #f4e9f0;
+  --bear-text-secondary: #c2aec0;
+  --bear-text-muted: #8a7a90;
+}
+
+@layer base {
+  .ac-home-grid-bg {
+    background-image:
+      linear-gradient(rgba(236, 72, 153, 0.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(236, 72, 153, 0.10) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 30%, #000 20%, transparent 70%);
+  }
+}
+
+.ac-top-nav-links-desktop {
+  display: none !important;
+}
+
+.ac-top-nav-menu-mobile {
+  display: flex !important;
+}
+
+@media (min-width: 1024px) {
+  .ac-top-nav-links-desktop {
+    display: flex !important;
+  }
+
+  .ac-top-nav-menu-mobile {
+    display: none !important;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bear-bg-primary);
+  color: var(--bear-text-primary);
+}
+
+code, pre, .mono {
+  font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+}
+
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  outline: 2px solid var(--bear-primary-600) !important;
+  outline-offset: 1px;
+  border-color: var(--bear-primary-600) !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.22) !important;
+}
+
+.ac-hero-ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.ac-hero-ctas > a,
+.ac-hero-ctas > button {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .ac-hero-ctas {
+    flex-direction: row;
+    width: auto;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .ac-hero-ctas > a,
+  .ac-hero-ctas > button {
+    width: auto;
+  }
+}
+
+.docs-nav-aside-desktop {
+  display: none;
+}
+
+.docs-nav-open-mobile {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .docs-nav-aside-desktop {
+    display: block;
+  }
+
+  .docs-nav-open-mobile {
+    display: none;
+  }
+}
