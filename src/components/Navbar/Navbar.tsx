@@ -1,7 +1,7 @@
 import { AppBar, Flex, Typography, Button, Badge, useBear } from '@forgedevstack/bear';
 import { Link } from '@forgedevstack/forge-compass/react';
-import { useI18n } from '../../i18n/index';
-import { ROUTES, AEROCRAFT_GITHUB_URL, AEROCRAFT_VERSION } from '../../constants/routes.const';
+import { useI18n } from '@i18n/index';
+import { ROUTES, AEROCRAFT_GITHUB_URL, AEROCRAFT_VERSION } from '@const/routes.const';
 
 export function Navbar() {
   const { t, locale, setLocale } = useI18n();
@@ -33,8 +33,8 @@ export function Navbar() {
           <Link to={ROUTES.STUDIO}>
             <Button variant="ghost" size="sm">{t.nav.studio}</Button>
           </Link>
-          <Link to={ROUTES.CHANGELOG}>
-            <Button variant="ghost" size="sm">{t.nav.changelog}</Button>
+          <Link to={ROUTES.PLAYGROUND}>
+            <Button variant="ghost" size="sm">{t.nav.playground}</Button>
           </Link>
         </Flex>
       }

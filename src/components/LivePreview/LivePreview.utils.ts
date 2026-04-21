@@ -1,4 +1,17 @@
+import { renderArbitraryStandaloneRule } from '@forgedevstack/aerocraft';
+import { LIVE_PREVIEW_ARBITRARY_CLASS_RE, LIVE_PREVIEW_ARBITRARY_CONFIG } from './LivePreview.const';
+
 const CLASS_ATTR_RE = /class\s*=\s*"([^"]+)"/g;
+
+export function buildArbitraryCss(classes: string[]): string {
+  const out: string[] = [];
+  for (const cls of classes) {
+    if (!LIVE_PREVIEW_ARBITRARY_CLASS_RE.test(cls)) continue;
+    const rule = renderArbitraryStandaloneRule(LIVE_PREVIEW_ARBITRARY_CONFIG, cls);
+    if (rule) out.push(rule);
+  }
+  return out.join('\n');
+}
 
 function escapeRegex(src: string): string {
   return src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -49,4 +62,16 @@ export function extractClassesFromMarkup(markup: string): string[] {
     match = CLASS_ATTR_RE.exec(markup);
   }
   return Array.from(seen);
+}
+
+export function extractPreviewSampleFromDeclarations(decl: string): string | null {
+  const t = decl.replace(/!important/gi, '').trim();
+  if (!t) return null;
+  const hex = t.match(/#[0-9a-fA-F]{3,8}\b/);
+  if (hex) return hex[0];
+  const rgb = t.match(/rgba?\([^)]+\)/);
+  if (rgb) return rgb[0];
+  const varRef = t.match(/var\([^)]+\)/);
+  if (varRef) return varRef[0];
+  return null;
 }

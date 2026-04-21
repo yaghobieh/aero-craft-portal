@@ -3,8 +3,8 @@ export const ROUTES = {
   DOCS: '/docs',
   DOCS_CATCHALL: '/docs/*',
   GET_STARTED: '/get-started',
-  CHANGELOG: '/changelog',
   STUDIO: '/studio',
+  PLAYGROUND: '/playground',
 } as const;
 
 export const AEROCRAFT_NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/aerocraft';

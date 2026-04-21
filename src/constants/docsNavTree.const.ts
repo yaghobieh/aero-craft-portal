@@ -1,8 +1,18 @@
+import { PORTAL_CATEGORIES } from './portalCategories.const';
+
 export type DocsNavNode = {
   id: string;
   path?: string;
   children?: DocsNavNode[];
 };
+
+const REFERENCE_CATEGORY_CHILDREN: DocsNavNode[] = PORTAL_CATEGORIES.map((cat) => ({
+  id: `reference/cat/${cat.id}`,
+  children: cat.properties.map((prop) => ({
+    id: `reference/${prop}`,
+    path: `reference/${prop}`,
+  })),
+}));
 
 export const DOCS_NAV_TREE: DocsNavNode[] = [
   {
@@ -20,12 +30,15 @@ export const DOCS_NAV_TREE: DocsNavNode[] = [
     id: 'core-concepts',
     children: [
       { id: 'core-concepts/dark-mode', path: 'core-concepts/dark-mode' },
+      { id: 'core-concepts/theme', path: 'core-concepts/theme' },
       { id: 'core-concepts/responsive', path: 'core-concepts/responsive' },
       { id: 'core-concepts/colors', path: 'core-concepts/colors' },
       { id: 'core-concepts/brand-palette', path: 'core-concepts/brand-palette' },
       { id: 'core-concepts/fonts', path: 'core-concepts/fonts' },
       { id: 'core-concepts/apply', path: 'core-concepts/apply' },
       { id: 'core-concepts/override-ui', path: 'core-concepts/override-ui' },
+      { id: 'core-concepts/use-with-mui', path: 'core-concepts/use-with-mui' },
+      { id: 'core-concepts/use-with-bear', path: 'core-concepts/use-with-bear' },
       { id: 'core-concepts/bundle-size', path: 'core-concepts/bundle-size' },
       { id: 'core-concepts/advantages', path: 'core-concepts/advantages' },
       { id: 'core-concepts/custom-styling', path: 'core-concepts/custom-styling' },
@@ -34,41 +47,23 @@ export const DOCS_NAV_TREE: DocsNavNode[] = [
     ],
   },
   {
+    id: 'recipes',
+    path: 'recipes',
+    children: [
+      { id: 'recipes/button', path: 'recipes/button' },
+      { id: 'recipes/card', path: 'recipes/card' },
+      { id: 'recipes/grid', path: 'recipes/grid' },
+      { id: 'recipes/navbar', path: 'recipes/navbar' },
+      { id: 'recipes/form', path: 'recipes/form' },
+      { id: 'recipes/mobile-menu', path: 'recipes/mobile-menu' },
+      { id: 'recipes/feature-list', path: 'recipes/feature-list' },
+      { id: 'recipes/pricing', path: 'recipes/pricing' },
+    ],
+  },
+  {
     id: 'reference',
     path: 'reference',
-    children: [
-      { id: 'reference/flex', path: 'reference/flex' },
-      { id: 'reference/flex-direction', path: 'reference/flex-direction' },
-      { id: 'reference/flex-wrap', path: 'reference/flex-wrap' },
-      { id: 'reference/flex-basis', path: 'reference/flex-basis' },
-      { id: 'reference/flex-grow', path: 'reference/flex-grow' },
-      { id: 'reference/flex-shrink', path: 'reference/flex-shrink' },
-      { id: 'reference/order', path: 'reference/order' },
-      { id: 'reference/justify-content', path: 'reference/justify-content' },
-      { id: 'reference/align-items', path: 'reference/align-items' },
-      { id: 'reference/align-self', path: 'reference/align-self' },
-      { id: 'reference/align-content', path: 'reference/align-content' },
-      { id: 'reference/gap', path: 'reference/gap' },
-      { id: 'reference/grid-template-columns', path: 'reference/grid-template-columns' },
-      { id: 'reference/grid-column', path: 'reference/grid-column' },
-      { id: 'reference/grid-template-rows', path: 'reference/grid-template-rows' },
-      { id: 'reference/grid-row', path: 'reference/grid-row' },
-      { id: 'reference/grid-auto-flow', path: 'reference/grid-auto-flow' },
-      { id: 'reference/grid-auto-columns', path: 'reference/grid-auto-columns' },
-      { id: 'reference/grid-auto-rows', path: 'reference/grid-auto-rows' },
-      { id: 'reference/justify-items', path: 'reference/justify-items' },
-      { id: 'reference/justify-self', path: 'reference/justify-self' },
-      { id: 'reference/place-content', path: 'reference/place-content' },
-      { id: 'reference/place-items', path: 'reference/place-items' },
-      { id: 'reference/place-self', path: 'reference/place-self' },
-      { id: 'reference/width', path: 'reference/width' },
-      { id: 'reference/min-width', path: 'reference/min-width' },
-      { id: 'reference/max-width', path: 'reference/max-width' },
-      { id: 'reference/height', path: 'reference/height' },
-      { id: 'reference/min-height', path: 'reference/min-height' },
-      { id: 'reference/max-height', path: 'reference/max-height' },
-      { id: 'reference/size', path: 'reference/size' },
-    ],
+    children: REFERENCE_CATEGORY_CHILDREN,
   },
 ];
 
@@ -87,7 +82,17 @@ export function flattenDocsNavForSearch(
     const sectionLabel = labelResolver(section.id);
     if (!section.children) continue;
     for (const leaf of section.children) {
-      if (leaf.path) {
+      if (leaf.children) {
+        for (const child of leaf.children) {
+          if (child.path) {
+            acc.push({
+              href: `/docs/${child.path}`,
+              label: labelResolver(child.path),
+              group: labelResolver(leaf.id),
+            });
+          }
+        }
+      } else if (leaf.path) {
         acc.push({
           href: `/docs/${leaf.path}`,
           label: labelResolver(leaf.path),

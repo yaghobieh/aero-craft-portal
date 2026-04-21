@@ -1,5 +1,5 @@
 import { Card, Typography } from '@forgedevstack/bear';
-import type { DocsSitePage } from '../../i18n/types';
+import type { DocsSitePage } from '@i18n/types';
 
 type DocShortcutsTableProps = {
   title: string;

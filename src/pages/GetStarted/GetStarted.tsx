@@ -1,6 +1,6 @@
 import { Flex, Typography, Card, Badge, Divider } from '@forgedevstack/bear';
-import { useI18n } from '../../i18n/index';
-import { AEROCRAFT_VERSION } from '../../constants/routes.const';
+import { useI18n } from '@i18n/index';
+import { AEROCRAFT_VERSION } from '@const/routes.const';
 
 function CodeBlock({ code }: { code: string }) {
   return (

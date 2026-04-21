@@ -7,8 +7,8 @@ import {
   BearIcons,
 } from '@forgedevstack/bear';
 import { useNavigate } from '@forgedevstack/forge-compass/react';
-import { useI18n } from '../../i18n/index';
-import { buildDocsSearchIndex } from '../../utils/docsSearch.utils';
+import { useI18n } from '@i18n/index';
+import { buildDocsSearchIndex } from '@utils/docsSearch.utils';
 
 type CommandPaletteProps = {
   open: boolean;

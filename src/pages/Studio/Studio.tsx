@@ -7,31 +7,25 @@ import {
   Flex,
   Typography,
   BearIcons,
-  Input,
 } from '@forgedevstack/bear';
-import { useI18n } from '../../i18n/index';
-import { ROUTES } from '../../constants/routes.const';
-import { AC_ACCENT } from '../../constants/theme.const';
-import { LivePreview } from '../../components/LivePreview';
+import { useI18n } from '@i18n/index';
+import { ROUTES } from '@const/routes.const';
+import { STUDIO_CANVAS_MIN_HEIGHT_PX } from '@const/numbers.const';
+import { LivePreview } from '@components/LivePreview';
 import { STUDIO_PRESETS, type StudioBlockPreset } from './Studio.const';
 import { StudioClassPicker } from './StudioClassPicker';
+import { StudioClassField } from './StudioClassField';
+import { DEFAULT_STUDIO_CONFIG, StudioConfigPanel, type StudioConfigState } from './StudioConfigPanel';
 
 type CanvasBlock = StudioBlockPreset & { instanceId: string; overrideMarkup?: string };
 
 type ContextMenuState = { instanceId: string; x: number; y: number };
 
-/**
- * Pulls the class list from the first opening tag in a block's markup.
- */
 function extractRootClasses(html: string): string {
   const m = html.match(/class="([^"]*)"/);
   return m ? m[1] : '';
 }
 
-/**
- * Writes a new class list into the first opening tag of a block's markup,
- * inserting a class attribute if one isn't already present.
- */
 function replaceRootClasses(html: string, newClasses: string): string {
   if (/class="[^"]*"/.test(html)) {
     return html.replace(/class="[^"]*"/, `class="${newClasses}"`);
@@ -39,11 +33,6 @@ function replaceRootClasses(html: string, newClasses: string): string {
   return html.replace(/^(\s*<[a-zA-Z][a-zA-Z0-9-]*)/, `$1 class="${newClasses}"`);
 }
 
-/**
- * Studio page: drag-style canvas where users compose blocks and live-edit
- * their AeroCraft class list. Right-click on any block opens the full class
- * picker with every known AeroCraft utility.
- */
 export function Studio() {
   const { t } = useI18n();
   const [blocks, setBlocks] = useState<CanvasBlock[]>([
@@ -51,6 +40,8 @@ export function Studio() {
   ]);
   const [selectedId, setSelectedId] = useState<string | null>('b0');
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
+  const [studioConfig, setStudioConfig] = useState<StudioConfigState>(DEFAULT_STUDIO_CONFIG);
+  const [showConfig, setShowConfig] = useState(false);
 
   useEffect(() => {
     if (!contextMenu) return;
@@ -69,6 +60,7 @@ export function Studio() {
 
   const selected = blocks.find((b) => b.instanceId === selectedId) ?? null;
   const selectedClasses = selected ? extractRootClasses(selected.overrideMarkup ?? selected.markup) : '';
+  const blockCountLabel = t.studio.blockCountTemplate.replace('{count}', String(blocks.length));
 
   const appendPreset = (preset: StudioBlockPreset) => {
     const instanceId = `b${Date.now()}`;
@@ -76,8 +68,26 @@ export function Studio() {
     setSelectedId(instanceId);
   };
 
+  const duplicateBlock = (instanceId: string) => {
+    const b = blocks.find((x) => x.instanceId === instanceId);
+    if (!b) return;
+    const newInstanceId = `b${Date.now()}`;
+    setBlocks((prev) => {
+      const idx = prev.findIndex((x) => x.instanceId === instanceId);
+      const clone: CanvasBlock = {
+        ...b,
+        instanceId: newInstanceId,
+        overrideMarkup: b.overrideMarkup,
+      };
+      const next = prev.slice();
+      next.splice(idx + 1, 0, clone);
+      return next;
+    });
+    setSelectedId(newInstanceId);
+  };
+
   const removeBlock = (instanceId: string) => {
-    setBlocks((prev) => prev.filter((b) => b.instanceId !== instanceId));
+    setBlocks((prev) => prev.filter((x) => x.instanceId !== instanceId));
     if (selectedId === instanceId) setSelectedId(null);
   };
 
@@ -159,9 +169,11 @@ export function Studio() {
     [blocks],
   );
 
+  const exportCode = exportMarkup || t.studio.exportEmptyComment;
+
   return (
-    <Flex direction="column" gap={4} style={{ width: '100%', maxWidth: '100%' }}>
-      <Flex direction="row" align="center" justify="between" style={{ flexWrap: 'wrap', gap: 12 }}>
+    <Flex direction="column" gap={4} className="ac-studio-page">
+      <Flex direction="row" align="center" justify="between" className="ac-studio-toolbar">
         <Link to={ROUTES.HOME}>
           <Button variant="ghost" size="sm" leftIcon={<BearIcons.ArrowLeftIcon size="xs" />}>
             {t.studio.back}
@@ -169,62 +181,92 @@ export function Studio() {
         </Link>
         <Typography variant="h4" weight="bold">{t.studio.title}</Typography>
         <Flex direction="row" gap={2}>
+          <Button
+            variant={showConfig ? 'primary' : 'outline'}
+            size="sm"
+            onClick={() => setShowConfig((v) => !v)}
+            leftIcon={<BearIcons.SettingsIcon size="xs" />}
+          >
+            {showConfig ? t.studio.configHide : t.studio.configShow}
+          </Button>
           <Button variant="outline" size="sm" onClick={clearCanvas}>{t.studio.reset}</Button>
         </Flex>
       </Flex>
 
-      <Typography variant="body2" color="muted" style={{ maxWidth: 720 }}>{t.studio.lead}</Typography>
-      <Typography variant="caption" color="muted" style={{ maxWidth: 720 }}>
-        Tip: right-click any block in the canvas list to open the full class picker (search across every AeroCraft utility: flex, justify-center, absolute, left-5, rounded-lg, shadow, opacity-50 …).
+      <Typography variant="body2" color="muted" className="ac-studio-lead">{t.studio.lead}</Typography>
+
+      {showConfig ? (
+        <StudioConfigPanel value={studioConfig} onChange={setStudioConfig} />
+      ) : null}
+
+      <Typography variant="caption" color="muted" className="ac-studio-tip">
+        {t.studio.tipClassPicker}
       </Typography>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(220px, 260px) minmax(0, 1fr) minmax(260px, 320px)',
-          gap: 16,
-          alignItems: 'start',
-        }}
-        className="ac-studio-grid"
-      >
-        <Card padding="md" radius="lg" style={{ border: '1px solid var(--bear-border-default)', maxHeight: 'min(80vh, 720px)', overflowY: 'auto' }}>
-          <Typography variant="caption" color="muted" weight="semibold" style={{ letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: 10 }}>
-            Blocks
+      <div className="ac-studio-grid">
+        <Card padding="md" radius="lg" className="ac-studio-palette-card">
+          <Typography variant="caption" color="muted" weight="semibold" className="ac-studio-palette-heading">
+            {t.studio.blocksPaletteTitle}
           </Typography>
-          <Flex direction="column" gap={2} style={{ marginTop: 8 }}>
+          <Flex direction="column" gap={2} className="ac-studio-palette-list">
             {STUDIO_PRESETS.map((p) => (
               <Button
                 key={p.id}
                 variant="ghost"
                 size="sm"
                 onClick={() => appendPreset(p)}
-                style={{
-                  justifyContent: 'flex-start',
-                  width: '100%',
-                  borderLeft: '3px solid transparent',
-                  padding: '10px 10px',
-                  borderRadius: 6,
-                }}
+                className="ac-studio-preset-btn"
               >
-                <Flex direction="column" align="start" gap={0} style={{ width: '100%' }}>
+                <Flex direction="column" align="start" gap={0} className="ac-studio-preset-inner">
                   <Typography variant="body2" weight="semibold">{p.title}</Typography>
-                  <Typography variant="caption" color="muted" style={{ fontSize: 11 }}>{p.description}</Typography>
+                  <Typography variant="caption" color="muted" className="ac-studio-preset-desc">{p.description}</Typography>
                 </Flex>
               </Button>
             ))}
           </Flex>
         </Card>
 
-        <Flex direction="column" gap={3} style={{ minWidth: 0 }}>
-          <Card padding="md" radius="lg" style={{ border: '1px solid var(--bear-border-default)' }}>
-            <Flex direction="row" align="center" justify="between" style={{ marginBottom: 10 }}>
+        <Flex direction="column" gap={3} className="ac-studio-center-col">
+          <Card padding="md" radius="lg" className="ac-studio-center-card">
+            <Flex direction="row" align="center" justify="between" className="ac-studio-preview-head">
               <Typography variant="caption" color="muted" weight="semibold">{t.studio.preview}</Typography>
-              <Typography variant="caption" color="muted">{blocks.length} block(s)</Typography>
+              <Typography variant="caption" color="muted">{blockCountLabel}</Typography>
             </Flex>
 
-            <LivePreview markup={canvasMarkup} label="Canvas" minHeight={420} />
+            <LivePreview markup={canvasMarkup} label={t.studio.canvasLabel} minHeight={STUDIO_CANVAS_MIN_HEIGHT_PX} />
 
-            <Flex direction="column" gap={1} style={{ marginTop: 12 }}>
+            <Flex direction="column" gap={2} className="ac-studio-edit-below-preview">
+              <Typography variant="caption" color="muted" weight="semibold" className="ac-studio-edit-heading">
+                {t.studio.editClassesTitle}
+              </Typography>
+              {selected ? (
+                <>
+                  <Typography variant="body2" weight="semibold">{selected.title}</Typography>
+                  <StudioClassField
+                    value={selectedClasses}
+                    onChange={updateSelectedClasses}
+                    placeholder={t.studio.classInputPlaceholder}
+                  />
+                  <Typography variant="caption" color="muted">
+                    {t.studio.classInputHelp}
+                  </Typography>
+                  <Flex direction="row" gap={2} className="ac-studio-edit-actions">
+                    <Button variant="primary" size="sm" onClick={openPickerForSelected}>
+                      {t.studio.browseAllClasses}
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={resetBlock}>
+                      {t.studio.resetBlock}
+                    </Button>
+                  </Flex>
+                </>
+              ) : (
+                <Typography variant="caption" color="muted">
+                  {t.studio.selectBlockPrompt}
+                </Typography>
+              )}
+            </Flex>
+
+            <Flex direction="column" gap={1} className="ac-studio-block-list">
               {blocks.map((b, idx) => {
                 const isSel = b.instanceId === selectedId;
                 return (
@@ -233,72 +275,47 @@ export function Studio() {
                     direction="row"
                     align="center"
                     gap={2}
-                    style={{
-                      padding: '6px 10px',
-                      border: `1px solid ${isSel ? AC_ACCENT : 'var(--bear-border-subtle)'}`,
-                      borderLeft: `3px solid ${isSel ? AC_ACCENT : 'transparent'}`,
-                      borderRadius: 6,
-                      cursor: 'pointer',
-                    }}
+                    className={`ac-studio-block-row${isSel ? ' ac-studio-block-row--selected' : ''}`}
                     onClick={() => setSelectedId(b.instanceId)}
                     onContextMenu={(e) => openContextMenu(b.instanceId, e)}
-                    title="Right-click for all classes"
+                    title={t.studio.blockRowTitle}
                   >
-                    <Typography variant="body2" weight={isSel ? 'semibold' : 'normal'} style={{ flex: 1 }}>
+                    <Typography variant="body2" weight={isSel ? 'semibold' : 'normal'} className="ac-studio-block-title">
                       {idx + 1}. {b.title}
                     </Typography>
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={(e) => { e.stopPropagation(); setSelectedId(b.instanceId); openContextMenu(b.instanceId, e); }}
-                      aria-label="classes"
-                      title="Open class picker"
+                      onClick={(e) => { e.stopPropagation(); duplicateBlock(b.instanceId); }}
+                      aria-label={t.studio.duplicateBlock}
+                      title={t.studio.duplicateBlock}
                     >
-                      +cls
+                      {t.studio.duplicateBlock}
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); moveBlock(b.instanceId, -1); }} aria-label="up">↑</Button>
-                    <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); moveBlock(b.instanceId, 1); }} aria-label="down">↓</Button>
-                    <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); removeBlock(b.instanceId); }} aria-label="delete">✕</Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => { e.stopPropagation(); setSelectedId(b.instanceId); openContextMenu(b.instanceId, e); }}
+                      aria-label={t.studio.ariaOpenClassPicker}
+                      title={t.studio.ariaOpenClassPicker}
+                    >
+                      {t.studio.addClassesShort}
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); moveBlock(b.instanceId, -1); }} aria-label={t.studio.ariaMoveBlockUp}>↑</Button>
+                    <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); moveBlock(b.instanceId, 1); }} aria-label={t.studio.ariaMoveBlockDown}>↓</Button>
+                    <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); removeBlock(b.instanceId); }} aria-label={t.studio.ariaRemoveBlock}>✕</Button>
                   </Flex>
                 );
               })}
               {blocks.length === 0 && (
-                <Typography variant="caption" color="muted">Click a block on the left to add it to the canvas.</Typography>
+                <Typography variant="caption" color="muted">{t.studio.emptyCanvasHint}</Typography>
               )}
             </Flex>
           </Card>
 
-          <CodeBlock code={exportMarkup || '<!-- canvas empty -->'} language="html" title={t.studio.code} showLineNumbers={false} copyable />
+          <CodeBlock code={exportCode} language="html" title={t.studio.code} showLineNumbers={false} copyable />
         </Flex>
 
-        <Card padding="md" radius="lg" style={{ border: '1px solid var(--bear-border-default)', position: 'sticky', top: 16 }}>
-          <Typography variant="caption" color="muted" weight="semibold" style={{ letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: 10 }}>
-            Edit classes
-          </Typography>
-          {selected ? (
-            <Flex direction="column" gap={2} style={{ marginTop: 10 }}>
-              <Typography variant="body2" weight="semibold">{selected.title}</Typography>
-              <Input
-                value={selectedClasses}
-                onChange={(e) => updateSelectedClasses(e.target.value)}
-                placeholder="flex justify-center p-6 rounded-lg"
-              />
-              <Typography variant="caption" color="muted">
-                Edit the class list of the block&apos;s root element. Any AeroCraft class works (flex, absolute, left-5, rounded-xl, shadow-lg…).
-              </Typography>
-              <Button variant="primary" size="sm" onClick={openPickerForSelected} style={{ justifyContent: 'center' }}>
-                Browse all classes
-              </Button>
-              <Button variant="ghost" size="sm" onClick={resetBlock} style={{ justifyContent: 'flex-start' }}>
-                Reset block
-              </Button>
-            </Flex>
-          ) : (
-            <Typography variant="caption" color="muted" style={{ display: 'block', marginTop: 8 }}>
-              Select a block in the canvas to edit its classes.
-            </Typography>
-          )}
-        </Card>
       </div>
 
       {contextMenu && contextBlock && (
@@ -313,16 +330,6 @@ export function Studio() {
           onClose={() => setContextMenu(null)}
         />
       )}
-
-      <style>
-        {`
-          @media (max-width: 1100px) {
-            .ac-studio-grid {
-              grid-template-columns: 1fr !important;
-            }
-          }
-        `}
-      </style>
     </Flex>
   );
 }

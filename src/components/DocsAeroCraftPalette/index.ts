@@ -1,0 +1,1 @@
+export { DocsAeroCraftPalette } from './DocsAeroCraftPalette';

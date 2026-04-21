@@ -1,29 +1,19 @@
-# AeroCraft Portal
+# AeroCraft portal
 
-Documentation and class-reference portal for [@forgedevstack/aerocraft](https://www.npmjs.com/package/@forgedevstack/aerocraft).
+Marketing site and documentation for [@forgedevstack/aerocraft](https://www.npmjs.com/package/@forgedevstack/aerocraft).
 
-Built with Bear, Forge Compass, Lingo i18n, Tailwind CSS.  
-Deployed at: https://aerocraftjs.com
-
----
-
-## Development
+## Scripts
 
 ```bash
 npm install
 npm run dev
-```
-
-## Build
-
-```bash
 npm run build
 ```
 
-## Deploy (Vercel)
+## Layout
 
-Push to main — Vercel auto-deploys via `vercel.json`.
+- `aerocraft.config.js` — design tokens consumed by the PostCSS plugin
+- `src/styles/index.css` — `@aerocraft` entry and portal-specific layers
+- `/playground` — live HTML + AeroCraft preview (Bear `CodeEditor`)
 
----
-
-Part of the [ForgeStack](https://forgedevstack.com) ecosystem.
+Release history for the library lives in the [AeroCraft CHANGELOG](https://github.com/yaghobieh/aerocraft/blob/main/CHANGELOG.md).

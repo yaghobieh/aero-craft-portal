@@ -11,7 +11,7 @@ export function buildDocsSearchIndex(t: Messages): SearchNavItem[] {
     { href: ROUTES.HOME, label: t.nav.home, group: t.commandPalette.portalPages },
     { href: '/docs/getting-started', label: t.hero.ctaStart, group: t.nav.docs },
     { href: ROUTES.STUDIO, label: t.nav.studio, group: t.commandPalette.portalPages },
-    { href: ROUTES.CHANGELOG, label: t.nav.changelog, group: t.commandPalette.portalPages },
+    { href: ROUTES.PLAYGROUND, label: t.nav.playground, group: t.commandPalette.portalPages },
     { href: ROUTES.DOCS, label: t.nav.docs, group: t.commandPalette.portalPages },
   ];
 

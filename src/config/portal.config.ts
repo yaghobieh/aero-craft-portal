@@ -1,5 +1,8 @@
 export const portalBrand = {
-  primaryHex: '#ec4899',
+  primaryHex: '#d70f66',
+  primaryHex500: '#f91f7d',
+  secondaryHex: '#a324dd',
+  accentHex: '#ff8a3c',
   npmPackage: '@forgedevstack/aerocraft',
 } as const;
 

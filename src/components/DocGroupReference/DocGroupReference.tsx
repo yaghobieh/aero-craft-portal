@@ -1,5 +1,5 @@
 import { Card, CodeBlock, Flex, Typography } from '@forgedevstack/bear';
-import { getDocsGroupReference } from '../../constants/docsGroupReference.const';
+import { getDocsGroupReference } from '@const/docsGroupReference.const';
 
 type DocGroupReferenceProps = {
   group: string;

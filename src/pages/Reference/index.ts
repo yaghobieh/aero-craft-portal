@@ -1,4 +1,5 @@
 export { ReferenceHubPage } from './hub/ReferenceHub.page';
+export { CatalogPropertyPage } from './catalog/CatalogProperty.page';
 
 export { FlexPage } from './flex/Flex.page';
 export { FlexDirectionPage } from './flex-direction/FlexDirection.page';

@@ -10,8 +10,10 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "resolveJsonModule": true,
     "jsx": "react-jsx",
     "strict": true,
+    "allowJs": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -19,9 +21,12 @@
       "@const/*": ["src/constants/*"],
       "@i18n/*": ["src/i18n/*"],
       "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@utils/*": ["src/utils/*"],
+      "@data/*": ["src/data/*"],
+      "@config/*": ["src/config/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "aerocraft.config.js"],
   "exclude": ["node_modules", "dist"]
 }

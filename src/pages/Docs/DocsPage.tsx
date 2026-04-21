@@ -12,28 +12,31 @@ import {
   BearIcons,
 } from '@forgedevstack/bear';
 import { ALL_SHORTCUTS, GROUP_LABELS, GROUP_ORDER, buildClassName, resolveConfig } from '@forgedevstack/aerocraft';
-import { DocGroup } from '../../components/DocGroup';
-import { DocGroupReference } from '../../components/DocGroupReference';
-import { useI18n } from '../../i18n/index';
-import { AEROCRAFT_VERSION } from '../../constants/routes.const';
-import { DocsSidebar } from '../../components/DocsSidebar';
-import { DOCS_SIDEBAR_WIDTH_PX, TOPBAR_HEIGHT_PX } from '../../constants/numbers.const';
-import { buildDocSections } from '../../utils/docsSections.utils';
-import { buildPortalDemoExampleMarkup } from '../../utils/docsExampleMarkup.utils';
+import { DocGroup } from '@components/DocGroup';
+import { DocGroupReference } from '@components/DocGroupReference';
+import { useI18n } from '@i18n/index';
+import { AEROCRAFT_VERSION } from '@const/routes.const';
+import { DocsSidebar } from '@components/DocsSidebar';
+import { DOCS_SIDEBAR_WIDTH_PX, TOPBAR_HEIGHT_PX } from '@const/numbers.const';
+import { buildDocSections } from '@utils/docsSections.utils';
+import { buildPortalDemoExampleMarkup } from '@utils/docsExampleMarkup.utils';
 import {
   DOC_CODE_CUSTOM_GAP,
   DOC_CODE_FLEX,
   DOC_CODE_GRID,
   DOC_CODE_RESPONSIVE,
-} from '../../constants/docsExamples.const';
-import { GUIDE_SLUGS, GUIDE_SLUG_TO_I18N, isGuideSlug } from '../../constants/docsGuides.const';
-import { isTopicDocPath } from '../../constants/docsPropertyTopics.const';
-import { DocShortcutsTable } from '../../components/DocShortcutsTable';
-import { FrameworkTabs } from '../../components/FrameworkTabs';
+} from '@const/docsExamples.const';
+import { GUIDE_SLUGS, GUIDE_SLUG_TO_I18N, isGuideSlug } from '@const/docsGuides.const';
+import { isTopicDocPath } from '@const/docsPropertyTopics.const';
+import { DocShortcutsTable } from '@components/DocShortcutsTable';
+import { FrameworkTabs } from '@components/FrameworkTabs';
+import { formatCssPropertySlug } from '@utils/docLabel.utils';
+import { buildPropertyShortcutRows } from '@utils/propertyDocShortcuts.utils';
 import {
   AlignContentPage,
   AlignItemsPage,
   AlignSelfPage,
+  CatalogPropertyPage,
   FlexBasisPage,
   FlexDirectionPage,
   FlexGrowPage,
@@ -64,7 +67,11 @@ import {
   SizePage,
   WidthPage,
 } from '../Reference';
-import type { DocsSitePage } from '../../i18n/types';
+import { catalogHasSlug } from '@data/referenceCatalog';
+import { RecipePage, RecipesHubPage } from '../Recipes';
+import { getRecipe } from '@const/recipes.const';
+import type { DocsSitePage } from '@i18n/types';
+import { DocsAeroCraftPalette } from '@components/DocsAeroCraftPalette';
 
 const REFERENCE_ROUTES: Record<string, () => JSX.Element> = {
   reference: () => <ReferenceHubPage />,
@@ -100,8 +107,6 @@ const REFERENCE_ROUTES: Record<string, () => JSX.Element> = {
   'reference/max-height': () => <MaxHeightPage />,
   'reference/size': () => <SizePage />,
 };
-import { formatCssPropertySlug } from '../../utils/docLabel.utils';
-import { buildPropertyShortcutRows } from '../../utils/propertyDocShortcuts.utils';
 
 const GROUP_ICON: Record<string, React.ReactNode> = {
   flex: <BearIcons.GridViewIcon size="xs" />,
@@ -373,7 +378,7 @@ export function DocsPage() {
           rows={[
             { example: 'h-[15px] w-[50%]', note: t.docsProperty.rowArbitrary },
             { example: 'gap-[1px]', note: t.docsProperty.rowArbitrary },
-            { example: 'text-[#007FFF]', note: t.docsProperty.rowColor },
+            { example: 'color-[#007FFF]', note: t.docsProperty.rowColor },
           ]}
         />
       </Flex>
@@ -442,10 +447,27 @@ export function DocsPage() {
 
   const mainContent = () => {
     if (docPath === undefined) return renderIndex();
+    if (docPath === 'recipes') return <RecipesHubPage />;
+    if (docPath.startsWith('recipes/')) {
+      const slug = docPath.slice('recipes/'.length);
+      if (getRecipe(slug)) return <RecipePage slug={slug} />;
+    }
     const refRoute = REFERENCE_ROUTES[docPath];
     if (refRoute) return refRoute();
+    if (docPath.startsWith('reference/')) {
+      const slug = docPath.slice('reference/'.length);
+      if (catalogHasSlug(slug)) return <CatalogPropertyPage slug={slug} />;
+    }
     const sitePage = t.docsSite[docPath];
     if (sitePage && docPath === 'getting-started/frameworks') return renderFrameworksPage(sitePage);
+    if (sitePage && docPath === 'core-concepts/colors') {
+      return (
+        <Flex direction="column" gap={6}>
+          {renderStaticSitePage(sitePage)}
+          <DocsAeroCraftPalette />
+        </Flex>
+      );
+    }
     if (sitePage) return renderStaticSitePage(sitePage);
     if (isGuideSlug(docPath)) return renderGuide(docPath);
     if (isGroupSlug(docPath)) return renderGroupDoc(docPath);

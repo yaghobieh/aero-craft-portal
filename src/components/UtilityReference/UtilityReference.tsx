@@ -175,8 +175,8 @@ export function UtilityReferencePage(props: UtilityReferencePageProps) {
                 textTransform: 'uppercase',
                 padding: '3px 8px',
                 borderRadius: 999,
-                background: 'linear-gradient(90deg, #ec4899, #c026d3)',
-                color: '#1a0b1f',
+                background: 'linear-gradient(90deg, #f91f7d, #c34df7)',
+                color: '#fff',
               }}
             >
               AeroCraft only

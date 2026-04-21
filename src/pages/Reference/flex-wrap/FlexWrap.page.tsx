@@ -1,4 +1,4 @@
-import { UtilityReferencePage } from '../../../components/UtilityReference';
+import { UtilityReferencePage } from '@components/UtilityReference';
 import { TILE_CLASS } from '../tileStyle';
 
 export function FlexWrapPage() {

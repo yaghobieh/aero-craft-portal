@@ -36,6 +36,56 @@ const CODE_CSS_ENTRY = `@aerocraft;
 
 *, *::before, *::after { box-sizing: border-box; }`;
 
+const CODE_AEROCRAFT_DIRECTIVES = `/* Full bundle (same as bare @aerocraft) */
+@aerocraft;
+
+/* Focused layers (smaller CSS when you split entry files) */
+@aerocraft base;
+@aerocraft fonts;
+@aerocraft layout;
+@aerocraft motion;
+@aerocraft all;`;
+
+const CODE_THEME_COLORS = `import { defineConfig } from '@forgedevstack/aerocraft';
+
+export default defineConfig({
+  theme: {
+    colors: {
+      myred: '#ef4444',
+      brand: { DEFAULT: '#d70f66', 500: '#f91f7d' },
+    },
+  },
+});`;
+
+const CODE_FORGESTACK_PORTAL_THEME = `import { defineConfig } from '@forgedevstack/aerocraft';
+
+export default defineConfig({
+  theme: {
+    colors: {
+      brand: { DEFAULT: '#d70f66', 500: '#f91f7d', 600: '#d70f66' },
+      secondary: '#a324dd',
+      accent: '#ff8a3c',
+      surface: '#140c1c',
+      'surface-muted': '#22112d',
+    },
+  },
+});`;
+
+const CODE_DARK_ROOT = `:root {
+  --surface: #ffffff;
+  --text: #0f172a;
+}
+
+.dark {
+  --surface: #0f0716;
+  --text: #f7ecf4;
+}
+
+.panel {
+  background: var(--surface);
+  color: var(--text);
+}`;
+
 const CODE_IMPORT_PKG = `import '@forgedevstack/aerocraft/styles.css';`;
 
 const CODE_IMPORT_AT = `@import "@forgedevstack/aerocraft/styles.css";`;
@@ -114,24 +164,29 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
   },
   'getting-started/import-css': {
     title: 'Import AeroCraft CSS',
-    lead: 'You can skip the PostCSS plugin and ship the pre-built stylesheet, or emit CSS with the CLI.',
+    lead: 'Use the PostCSS plugin so @aerocraft expands in your entry CSS, import the pre-built bundle for prototypes, or emit a file with the CLI. Split layers with named directives when you want smaller chunks.',
     sections: [
       {
-        title: 'ESM import',
-        body: 'Import the published stylesheet from JavaScript or TypeScript so your bundler resolves the package path.',
+        title: '@aerocraft layers',
+        body: 'In your main stylesheet, the bare directive pulls the full shortcut bundle. Pass a layer name to emit only that slice: base (display, flex, spacing, gap, size), fonts (typography), layout (flex, grid, position, display, gap), motion (transitions, cursor, interactive), or all (same as bare).',
       },
       {
-        title: 'CSS @import',
-        body: 'Inside a CSS file, import the package stylesheet by path. Your bundler must resolve node_modules.',
+        title: 'Pre-built package CSS',
+        body: 'Import @forgedevstack/aerocraft/styles.css from JS or via @import when you are not running the PostCSS plugin. Pair with content scanning in config if you rely on arbitrary bracket classes.',
+      },
+      {
+        title: 'Where the real CSS lives',
+        body: 'Generated rules are written wherever @aerocraft expands (or prepended when injectWithoutDirective is true). The npm styles.css file is the precompiled full bundle. Your design tokens from aerocraft.config theme merge into that output as extra utility classes.',
       },
     ],
     codeBlocks: [
+      { title: 'src/index.css (layers)', code: CODE_AEROCRAFT_DIRECTIVES, language: 'css' },
       { title: 'main.tsx', code: CODE_IMPORT_PKG, language: 'typescript' },
       { title: 'app.css', code: CODE_IMPORT_AT, language: 'css' },
     ],
     shortcuts: [
-      { example: 'gap-[12px]', note: 'Works with pre-built CSS + scan' },
-      { example: 'w-[min(100%,480px)]', note: 'Arbitrary width' },
+      { example: '@aerocraft base', note: 'Layout + spacing slice' },
+      { example: 'gap-[12px]', note: 'Arbitrary value utilities' },
     ],
   },
   'getting-started/postcss': {
@@ -171,12 +226,16 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
     ],
   },
   'getting-started/cursor-plugin': {
-    title: 'Cursor plugin',
-    lead: 'A dedicated Cursor / VS Code extension for AeroCraft is planned as a separate repository. It will ship snippets, class search, and config hints.',
+    title: 'Editor extension (VS Code & Cursor)',
+    lead: 'The aero-craft-plugin workspace ships a VS Code–compatible extension: class completions, Bear component hints, and an optional compatibility mode that surfaces both AeroCraft shortcuts and familiar utility names.',
     sections: [
       {
-        title: 'Status',
-        body: 'Track the ForgeStack roadmap for the editor plugin. Until it ships, use the docs search in this portal and your CSS language service.',
+        title: 'Repository',
+        body: 'Open the aero-craft-plugin folder, run npm install && npm run compile, then launch the Extension Development Host from VS Code. Publish the .vsix to your team registry or sideload locally.',
+      },
+      {
+        title: 'Settings',
+        body: 'aerocraft.enableCompletions toggles markup completions. aerocraft.utilityAliasMode mirrors common utility naming when you are migrating an existing class list. bear.enableComponentSnippets adds Bear imports and props stubs in TSX.',
       },
     ],
     shortcuts: [
@@ -185,7 +244,7 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
   },
   'getting-started/upgrade-guide': {
     title: 'Upgrade guide',
-    lead: 'Patch releases keep config compatible. Check the changelog when jumping minor versions.',
+    lead: 'Patch releases keep config compatible. Review the CHANGELOG on GitHub before minor bumps.',
     sections: [
       {
         title: 'npm',
@@ -202,15 +261,48 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
   },
   'core-concepts/dark-mode': {
     title: 'Dark mode',
-    lead: 'AeroCraft utilities are theme-agnostic. Toggle a class or data attribute on the root and pair with your color tokens.',
+    lead: 'AeroCraft does not ship a built-in dark: variant. You choose how the HTML root signals dark UI—class, data attribute, or prefers-color-scheme—and you own the color tokens. Layout utilities stay identical; only your token CSS changes.',
     sections: [
       {
-        title: 'Authoring',
-        body: 'Use .dark or [data-theme=dark] selectors in your own CSS for brand colors. Utilities handle layout and spacing.',
+        title: 'System preference',
+        body: 'Use @media (prefers-color-scheme: dark) in your base layer to flip CSS variables. AeroCraft classes keep working because they reference layout, not hard-coded light colors.',
+      },
+      {
+        title: 'Manual toggle',
+        body: 'Add .dark or [data-theme="dark"] on html (or BearProvider’s mode) and redefine --surface, --text, and brand variables under that selector. This matches the class- or attribute-driven pattern described in modern utility-first docs.',
+      },
+      {
+        title: 'With Bear',
+        body: 'This portal uses BearProvider + CSS variables (--bear-bg-*, --bear-text-*). Toggling mode updates variables, so AeroCraft layout classes never need a second copy for dark.',
       },
     ],
+    codeBlocks: [{ title: 'Token swap', code: CODE_DARK_ROOT, language: 'css' }],
     shortcuts: [
-      { example: 'dark:text-[#e2e8f0]', note: 'Optional responsive dark variant when enabled' },
+      { example: 'bg-[var(--surface)]', note: 'Surfaces follow the active theme' },
+      { example: '.dark { --brand: #f472b6; }', note: 'Override tokens, not every utility' },
+    ],
+  },
+  'core-concepts/theme': {
+    title: 'Theme tokens',
+    lead: 'The theme block in aerocraft.config is where you declare colors, font stacks, spacing keys, radii, shadows, and screen breakpoints. AeroCraft turns each token into real utility classes—no hand-written maps of bg-* and text-*.',
+    sections: [
+      {
+        title: 'Colors',
+        body: 'A string color emits bg-name, text-name, and border-name. An object with DEFAULT and numeric keys emits bg-name, bg-name-500, text-name-500, and the same for borders.',
+      },
+      {
+        title: 'Fonts, spacing, radii, shadows',
+        body: 'fontFamily keys become font-* utilities. spacing keys expand to padding, margin, and gap utilities. borderRadius becomes rounded-*; boxShadow becomes shadow-*.',
+      },
+      {
+        title: 'extend',
+        body: 'Use theme.extend to add tokens without replacing the built-in shortcut catalog. Values merge with your base theme object.',
+      },
+    ],
+    codeBlocks: [{ title: 'aerocraft.config', code: CODE_THEME_COLORS, language: 'typescript' }],
+    shortcuts: [
+      { example: 'color-myred', note: 'From theme.colors.myred string' },
+      { example: 'background-brand-500', note: 'From theme.colors.brand object' },
     ],
   },
   'core-concepts/responsive': {
@@ -228,29 +320,67 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
   },
   'core-concepts/colors': {
     title: 'Colors',
-    lead: 'Use arbitrary text and background values for one-off brand colors. Keep scales in CSS variables when you reuse them.',
+    lead: 'Theme colors emit AeroCraft utilities: color-* (foreground), background-* (fill), border-color-* (stroke). The package ships a default palette (pink, red, yellow, blue, white, black) merged into theme.colors; override keys in your config. Use bracket forms such as color-[#fff] or background-[rgba(0,0,0,0.5)] for one-off values.',
     sections: [
       {
-        title: 'Tokens',
-        body: 'Define --brand and --surface in :root, then reference them in custom CSS alongside AeroCraft layout classes.',
+        title: 'theme.colors',
+        body: 'Each key becomes background-<name>, color-<name>, and border-color-<name>. A string value maps to the DEFAULT shade; an object with numeric keys (25, 50, …, 950) maps to color-<name>-500 style utilities. Hyphenated keys such as surface-muted become background-surface-muted.',
+      },
+      {
+        title: 'Why a color class might do nothing',
+        body: 'If you removed that key from theme.colors and it is not in the default palette, no rule is generated. Use an arbitrary value such as color-[#ef4444] or add the token back under theme.colors.',
+      },
+      {
+        title: 'Bracket literals',
+        body: 'color-[#ffffff], background-[#0f0716], color-[var(--x)], and background-[rgba(0,0,0,0.4)] compile when the class appears in processed sources. Underscores inside brackets become spaces.',
+      },
+      {
+        title: 'Bear and AeroCraft together',
+        body: 'BearProvider still drives component tokens; duplicate brand-critical names in aerocraft.config so static HTML and React both share the same utility names.',
       },
     ],
+    codeBlocks: [
+      { title: 'ForgeStack portal (excerpt)', code: CODE_FORGESTACK_PORTAL_THEME, language: 'typescript' },
+    ],
     shortcuts: [
-      { example: 'text-[#007FFF]', note: 'Arbitrary color' },
-      { example: 'bg-[rgb(15_23_42)]', note: 'Modern color syntax' },
+      { example: 'color-red-600', note: 'Default palette or theme.colors.red' },
+      { example: 'background-pink-400', note: 'Default palette or theme.colors.pink' },
+      { example: 'color-[#ffffff]', note: 'Arbitrary foreground color' },
+      { example: 'background-brand-500', note: 'From theme.colors.brand steps' },
     ],
   },
   'core-concepts/custom-styling': {
     title: 'Custom styling',
-    lead: 'Use customShortcuts in config for repeated patterns, or arbitrary bracket values for one-off declarations.',
+    lead: 'Combine @layer base/components/utilities with AeroCraft output, arbitrary bracket utilities, and customShortcuts for patterns the generator does not know yet.',
     sections: [
       {
         title: 'Layers',
-        body: 'Place AeroCraft in a @layer block so your components can override intentionally.',
+        body: 'Import or emit AeroCraft inside @layer utilities { @aerocraft; } so your component CSS in @layer components can win when specificity matches. Base rules belong in @layer base alongside optional resets.',
+      },
+      {
+        title: 'Resets and normalize',
+        body: 'AeroCraft is not a browser reset. If you need consistent baselines, add modern-normalize or a ten-line box-sizing + line-height preset in @layer base. Many apps already get this from their UI kit (Bear includes sensible defaults via its CSS).',
+      },
+      {
+        title: 'Escaping constraints',
+        body: 'Use arbitrary values such as top-[117px], bg-[url(...)], or multi-property escapes when a token does not exist yet, then promote repeated values into theme or customShortcuts.',
+      },
+    ],
+    codeBlocks: [
+      {
+        title: 'Layered entry',
+        language: 'css',
+        code: `@layer base {
+  :root { color-scheme: dark light; }
+}
+@layer utilities {
+  @aerocraft;
+}`,
       },
     ],
     shortcuts: [
       { example: 'rounded-[1.25rem]', note: 'Arbitrary radius' },
+      { example: 'customShortcuts', note: 'Advanced patterns in config' },
     ],
   },
   'core-concepts/brand-palette': {
@@ -267,7 +397,7 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
       },
       {
         title: 'Per-product scales',
-        body: 'For larger apps, generate a 10-step scale (50…950) per brand color, matching Bear/Tailwind style. Keep the scale in one file and expose via CSS variables.',
+        body: 'For larger apps, maintain a step scale (for example 50 through 950) per brand color—same shape Bear expects—and expose shared steps via CSS variables where helpful.',
       },
     ],
     codeBlocks: [
@@ -290,7 +420,7 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
       {
         title: 'Usage',
         language: 'html',
-        code: `<button class="p-3 cursor-pointer" style="background:var(--brand);color:#fff">Buy</button>
+        code: `<button class="p-3 cursor-pointer bg-[var(--brand)] text-[#fff]">Buy</button>
 <p class="text-[var(--muted)]">Secondary copy</p>`,
       },
     ],
@@ -442,6 +572,183 @@ export default { plugins: [aerocraftPlugin(config), apply] };`,
     shortcuts: [
       { example: '@layer aerocraft', note: 'Scope utilities' },
       { example: 'className="p-3 flex-row"', note: 'Override layout on MUI/Bear' },
+    ],
+  },
+  'core-concepts/use-with-mui': {
+    title: 'Use AeroCraft with MUI (Material UI)',
+    lead: 'AeroCraft composes perfectly with MUI: keep MUI for accessibility, theming, and complex components (DatePicker, DataGrid), use AeroCraft utilities for every layout, spacing, and one-off responsive tweak. Same spirit as Tailwind v4 — your CSS variables become the theme, utilities consume them.',
+    sections: [
+      {
+        title: '1. Install side-by-side',
+        body: 'MUI and AeroCraft are independent. Install both, import MUI’s CssBaseline once, then import AeroCraft from your global stylesheet. AeroCraft adds ~30 kB gzipped for the full set (less when content scanning is on).',
+      },
+      {
+        title: '2. Share a single source of truth (CSS variables)',
+        body: 'Declare brand tokens as CSS variables on :root. Reference them from MUI’s theme and from AeroCraft customShortcuts. Changing a variable recolors both MUI components and utility classes at once — no rebuild needed.',
+      },
+      {
+        title: '3. Layer order wins every cascade fight',
+        body: 'Declare @layer mui, aerocraft, app in your global CSS. MUI base styles land in the first layer, AeroCraft utilities in the second, your component overrides in the third. This mirrors Tailwind v4’s @layer base/components/utilities philosophy.',
+      },
+      {
+        title: '4. Apply AeroCraft to MUI components via className',
+        body: 'Every MUI component accepts className. Use it for layout (flex-row-center, gap-3), spacing (p-4, mx-auto), sizing (w-full, max-w-screen-md), and responsive (md:flex-row). Reserve MUI’s sx prop for component-specific tokens.',
+      },
+      {
+        title: '5. When MUI uses !important',
+        body: 'MUI occasionally emits rules with higher specificity. Either bump AeroCraft into a later @layer or, for one-offs, use the `!important` variant: className="!p-4".',
+      },
+    ],
+    codeBlocks: [
+      {
+        title: 'theme-tokens.css (shared with MUI + AeroCraft)',
+        language: 'css',
+        code: `:root {
+  --brand-500: #f91f7d;
+  --brand-600: #d70f66;
+  --surface: #170b20;
+  --on-surface: #f7ecf4;
+
+  --bear-primary-500: var(--brand-500);
+  --bear-primary-600: var(--brand-600);
+}
+
+@layer mui, aerocraft, app;
+@layer aerocraft { @aerocraft; }`,
+      },
+      {
+        title: 'theme.ts (MUI)',
+        language: 'typescript',
+        code: `import { createTheme } from '@mui/material/styles';
+
+const rootStyles = getComputedStyle(document.documentElement);
+const read = (name: string) => rootStyles.getPropertyValue(name).trim();
+
+export const theme = createTheme({
+  palette: {
+    primary: { main: read('--brand-500'), dark: read('--brand-600') },
+    background: { default: read('--surface') },
+    text: { primary: read('--on-surface') },
+  },
+});`,
+      },
+      {
+        title: 'aerocraft.config.ts (custom utilities bound to tokens)',
+        language: 'typescript',
+        code: `import { defineConfig } from '@forgedevstack/aerocraft';
+
+export default defineConfig({
+  mode: 'standalone',
+  customShortcuts: {
+    'background-brand': { css: { 'background-color': 'var(--brand-500)' }, group: 'background' },
+    'color-brand': { css: { color: 'var(--brand-500)' }, group: 'color' },
+    'background-surface': { css: { 'background-color': 'var(--surface)' }, group: 'background' },
+  },
+});`,
+      },
+      {
+        title: 'Checkout.tsx (MUI + AeroCraft)',
+        language: 'tsx',
+        code: `import { Button, TextField, Paper } from '@mui/material';
+
+export function Checkout() {
+  return (
+    <Paper className="flex-col gap-4 p-6 max-w-md mx-auto rounded-xl">
+      <h2 className="text-xl font-bold">Checkout</h2>
+      <TextField label="Email" fullWidth className="w-full" />
+      <TextField label="Card" fullWidth className="w-full" />
+      <div className="flex-row items-center justify-between gap-3">
+        <span className="text-sm color-brand">Total: $29</span>
+        <Button variant="contained" color="primary" className="!px-5 !py-3 !rounded-md">
+          Pay now
+        </Button>
+      </div>
+    </Paper>
+  );
+}`,
+      },
+    ],
+    shortcuts: [
+      { example: 'className="flex-row-center gap-3"', note: 'Layout on any MUI component' },
+      { example: 'className="!p-4"', note: 'Beat MUI !important rules' },
+      { example: 'var(--brand-500)', note: 'Shared token for MUI + utilities' },
+      { example: '@layer mui, aerocraft, app', note: 'Cascade order' },
+    ],
+  },
+  'core-concepts/use-with-bear': {
+    title: 'Use AeroCraft with Bear',
+    lead: 'Bear is the design system that ships this portal. AeroCraft is the utility layer underneath. Together: Bear handles component semantics (Button variants, Typography scale, accessible Modal), AeroCraft handles every layout, spacing, and one-off tweak. Same token source, same theme.',
+    sections: [
+      {
+        title: '1. Tokens: Bear owns colors, AeroCraft reads them',
+        body: 'Bear exposes CSS variables like --bear-primary-600, --bear-bg-secondary, --bear-border-default. In aerocraft.config.ts, declare customShortcuts that reference these variables. You never hardcode hex values in your utilities.',
+      },
+      {
+        title: '2. Use Bear for the component, AeroCraft for layout',
+        body: 'Every Bear component accepts className. Use it for layout utilities (flex-col, gap-3, size-10). Keep the semantic variants on the Bear prop (variant="primary"), so dark mode, focus rings, and disabled states still work out of the box.',
+      },
+      {
+        title: '3. Do not pass inline style to Bear components',
+        body: 'Inline style props bypass the design system. Instead: compose AeroCraft classes on className, or wrap in a bearStyled block if you need something the system does not yet provide. This keeps Bear upgradable.',
+      },
+      {
+        title: '4. Dark mode + responsive',
+        body: 'Bear switches theme via .bear-dark on <html>. AeroCraft utilities work the same in either mode. For responsive variants, prefix the utility (md:flex-row) and let Bear resolve the component theme.',
+      },
+    ],
+    codeBlocks: [
+      {
+        title: 'aerocraft.config.ts (Bear-aware utilities)',
+        language: 'typescript',
+        code: `import { defineConfig } from '@forgedevstack/aerocraft';
+
+export default defineConfig({
+  mode: 'standalone',
+  customShortcuts: {
+    'background-bear': { css: { 'background-color': 'var(--bear-bg-secondary)' }, group: 'background' },
+    'color-bear': { css: { color: 'var(--bear-text-primary)' }, group: 'color' },
+    'color-bear-muted': { css: { color: 'var(--bear-text-muted)' }, group: 'color' },
+    'border-color-bear': { css: { 'border-color': 'var(--bear-border-default)' }, group: 'border' },
+  },
+});`,
+      },
+      {
+        title: 'ProductCard.tsx (Bear + AeroCraft, no inline style)',
+        language: 'tsx',
+        code: `import { Card, Button, Typography, Badge } from '@forgedevstack/bear';
+
+export function ProductCard() {
+  return (
+    <Card radius="lg" padding="md" className="flex-col gap-3 max-w-sm">
+      <div className="w-full rounded-lg aspect-[16/9] background-brand-gradient" />
+      <div className="flex-row-center-between gap-2">
+        <Typography variant="body1" weight="semibold">Aurora Sneaker</Typography>
+        <Badge variant="primary">$120</Badge>
+      </div>
+      <Typography variant="body2" color="muted">
+        Reactive foam sole, mesh upper. Free shipping over $50.
+      </Typography>
+      <Button variant="primary" size="md" className="w-full">
+        Add to cart
+      </Button>
+    </Card>
+  );
+}`,
+      },
+      {
+        title: 'Avoid: inline style on Bear components',
+        language: 'tsx',
+        code: `// ✗ Do not do this
+<Card style={{ padding: 24, display: 'flex', gap: 12 }}>…</Card>
+
+// ✓ Do this instead
+<Card padding="md" className="flex-col gap-3">…</Card>`,
+      },
+    ],
+    shortcuts: [
+      { example: 'className="flex-col gap-3"', note: 'Layout on Bear components' },
+      { example: 'var(--bear-primary-600)', note: 'Shared token' },
+      { example: 'background-bear color-bear-muted', note: 'Custom utility using Bear vars' },
     ],
   },
   'core-concepts/bundle-size': {

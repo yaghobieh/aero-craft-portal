@@ -12,7 +12,7 @@ export interface Messages {
   nav: {
     home: string;
     docs: string;
-    changelog: string;
+    playground: string;
     github: string;
     sandbox: string;
     studio: string;
@@ -30,6 +30,25 @@ export interface Messages {
     ctaSandbox: string;
     ctaStudio: string;
     version: string;
+    titlePlain: string;
+    titleGradient: string;
+    lead: string;
+    ctaGetStarted: string;
+    ctaReference: string;
+    npmPrompt: string;
+    npmCommand: string;
+    worksWith: string;
+    previewLabel: string;
+    appFileLabel: string;
+    chromeBrand: string;
+    demoTitle: string;
+    demoSubtitle: string;
+    demoBadgeNew: string;
+    demoBodyBefore: string;
+    demoBodyCode: string;
+    demoBodyAfter: string;
+    demoTryIt: string;
+    demoDocs: string;
   };
   homeShowcase: {
     colorsTitle: string;
@@ -76,6 +95,27 @@ export interface Messages {
     panelDisplayOverflow: string;
     panelMotion: string;
     panelInteractive: string;
+    configShow: string;
+    configHide: string;
+    blocksPaletteTitle: string;
+    editClassesTitle: string;
+    tipClassPicker: string;
+    canvasLabel: string;
+    blockCountTemplate: string;
+    emptyCanvasHint: string;
+    classInputPlaceholder: string;
+    classInputHelp: string;
+    browseAllClasses: string;
+    resetBlock: string;
+    selectBlockPrompt: string;
+    blockRowTitle: string;
+    addClassesShort: string;
+    duplicateBlock: string;
+    ariaOpenClassPicker: string;
+    ariaMoveBlockUp: string;
+    ariaMoveBlockDown: string;
+    ariaRemoveBlock: string;
+    exportEmptyComment: string;
   };
   features: {
     title: string;
@@ -229,13 +269,18 @@ export interface Messages {
     };
     cli: { title: string; body: string };
   };
-  changelog: {
+  playground: {
     title: string;
-    initial: string;
+    lead: string;
+    back: string;
+    reset: string;
+    editorLabel: string;
+    previewLabel: string;
   };
   footer: {
     partOf: string;
     license: string;
+    changelogLink: string;
   };
   docsNav: Record<string, string>;
   docsSite: Record<string, DocsSitePage>;

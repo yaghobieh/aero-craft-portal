@@ -2,16 +2,16 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { Button, Drawer, Flex, Typography, Badge, useBear, BearIcons, Dropdown } from '@forgedevstack/bear';
 import { Link } from '@forgedevstack/forge-compass/react';
-import { useI18n } from '../../i18n/index';
-import type { Locale } from '../../i18n/types';
+import { useI18n } from '@i18n/index';
+import type { Locale } from '@i18n/types';
 import {
   ROUTES,
   AEROCRAFT_GITHUB_URL,
   AEROCRAFT_NPM_URL,
   AEROCRAFT_VERSION,
-} from '../../constants/routes.const';
-import { portalBrand } from '../../config/portal.config';
-import { TOPBAR_HEIGHT_PX } from '../../constants/numbers.const';
+} from '@const/routes.const';
+import { portalBrand } from '@config/portal.config';
+import { TOPBAR_HEIGHT_PX } from '@const/numbers.const';
 
 const LOCALE_META: Record<Locale, { flag: string; label: string }> = {
   en: { flag: 'EN', label: 'English' },
@@ -145,7 +145,7 @@ export function TopNavbar({ onOpenSearch }: TopNavbarProps) {
           {navLink(ROUTES.HOME, t.nav.home)}
           {navLink(ROUTES.DOCS, t.nav.docs)}
           {navLink(ROUTES.STUDIO, t.nav.studio)}
-          {navLink(ROUTES.CHANGELOG, t.nav.changelog)}
+          {navLink(ROUTES.PLAYGROUND, t.nav.playground)}
         </Flex>
 
         <Flex
@@ -177,7 +177,7 @@ export function TopNavbar({ onOpenSearch }: TopNavbarProps) {
             {navLink(ROUTES.HOME, t.nav.home)}
             {navLink(ROUTES.DOCS, t.nav.docs)}
             {navLink(ROUTES.STUDIO, t.nav.studio)}
-            {navLink(ROUTES.CHANGELOG, t.nav.changelog)}
+            {navLink(ROUTES.PLAYGROUND, t.nav.playground)}
             <Button
               variant="ghost"
               size="sm"
