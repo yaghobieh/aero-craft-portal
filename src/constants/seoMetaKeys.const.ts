@@ -1,0 +1,12 @@
+export const SEO_META_KEY_DESCRIPTION = 'description';
+export const SEO_META_OG_TITLE = 'og:title';
+export const SEO_META_OG_DESC = 'og:description';
+export const SEO_META_OG_URL = 'og:url';
+export const SEO_META_OG_TYPE = 'og:type';
+export const SEO_META_OG_IMAGE = 'og:image';
+export const SEO_META_OG_SITE = 'og:site_name';
+export const SEO_META_TW_CARD = 'twitter:card';
+export const SEO_META_TW_TITLE = 'twitter:title';
+export const SEO_META_TW_DESC = 'twitter:description';
+export const SEO_META_TW_IMAGE = 'twitter:image';
+export const SEO_META_TW_SITE = 'twitter:site';

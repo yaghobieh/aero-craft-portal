@@ -6,6 +6,7 @@ import { HomeCategories } from './sections/HomeCategories';
 import { HomeShortcuts } from './sections/HomeShortcuts';
 import { HomePalette } from './sections/HomePalette';
 import { HomeInstallCta } from './sections/HomeInstallCta';
+import { HomeComponentPresets } from './sections/HomeComponentPresets';
 
 export function Home() {
   return (
@@ -15,6 +16,7 @@ export function Home() {
       <HomeCategories />
       <HomeShortcuts />
       <HomeExamples />
+      <HomeComponentPresets />
       <HomePalette />
       <HomeInstallCta />
     </Flex>

@@ -125,10 +125,10 @@ export function DocsAeroCraftPalette() {
         <Flex direction="column" gap={2}>
           <Typography variant="h4" weight="bold">Color wheels</Typography>
           <Typography variant="body2" color="muted" className="ac-docs-palette-lead">
-            Pink, red, yellow, and blue scales ship inside <code className="ac-inline-code">@forgedevstack/aerocraft</code>
+            Default color ramps (including pink, red, yellow, and blue) ship inside <code className="ac-inline-code">@forgedevstack/aerocraft</code>
             {' '}as <code className="ac-inline-code">DEFAULT_THEME_COLORS</code>
             {' '}(merged into your <code className="ac-inline-code">theme.colors</code>
-            ). Use <code className="ac-inline-code">color-pink-500</code>
+            ). Use <code className="ac-inline-code">color-blue-500</code>
             , <code className="ac-inline-code">background-red-600</code>
             , <code className="ac-inline-code">color-[#ffffff]</code>
             {' '}for literals. Override or add keys in your project config as needed.
@@ -136,13 +136,13 @@ export function DocsAeroCraftPalette() {
         </Flex>
 
         <CircleRowNumericScale
-          title="ForgeStack primary (magenta)"
-          subtitle="BearProvider / theme.const — not the same keys as theme.colors.pink"
+          title="Portal primary (blue)"
+          subtitle="BearProvider / theme.const — separate from package DEFAULT_THEME_COLORS"
           scale={AC_PRIMARY_SCALE}
         />
-        <CircleRowNumericScale title="ForgeStack secondary (orchid)" scale={AC_SECONDARY_SCALE} />
+        <CircleRowNumericScale title="Portal secondary (indigo)" scale={AC_SECONDARY_SCALE} />
         <CircleRowStringScale
-          title="Pink (theme.colors.pink)"
+          title="Package pink scale (theme.colors.pink)"
           subtitle="color-pink-500 · background-pink-300 · …"
           scale={PINK_SCALE}
           keys={DOCS_PALETTE_STEP_KEYS}

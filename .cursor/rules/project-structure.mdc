@@ -28,7 +28,8 @@ src/
   shims/
     vue-stub.ts           — stub for Bear's Vue peer dep
   styles/
-    index.css             — Tailwind + global resets
+    aerocraft.css         — @aerocraft entry
+    portal-surfaces.css   — portal + Bear theme layers
   App.tsx                 — BearProvider + Router + AppBar + Sidebar
   main.tsx                — createRoot
 ```

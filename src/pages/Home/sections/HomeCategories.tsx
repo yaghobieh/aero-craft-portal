@@ -75,7 +75,7 @@ export function HomeCategories() {
                   width: 120,
                   height: 120,
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(249,31,125,0.18), transparent 60%)',
+                  background: 'radial-gradient(circle, rgba(59,130,246,0.22), transparent 60%)',
                 }}
               />
               <Flex direction="row" align="center" gap={2} className="ac-cat-icon-row">

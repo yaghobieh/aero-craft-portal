@@ -9,15 +9,15 @@ export function HomeInstallCta() {
         position: 'relative',
         borderRadius: 22,
         padding: 1,
-        background: 'linear-gradient(120deg, #d70f66, #f91f7d, #c34df7, #670e8e)',
-        boxShadow: '0 40px 80px rgba(249, 31, 125, 0.2)',
+        background: 'linear-gradient(120deg, #2563eb, #3b82f6, #6366f1, #4338ca)',
+        boxShadow: '0 40px 80px rgba(37, 99, 235, 0.22)',
       }}
     >
       <div
         style={{
           position: 'relative',
           borderRadius: 21,
-          background: 'radial-gradient(120% 140% at 0% 0%, rgba(249,31,125,0.18), transparent 60%), linear-gradient(180deg, #140a1d, #0a0311)',
+          background: 'radial-gradient(120% 140% at 0% 0%, rgba(59,130,246,0.18), transparent 60%), linear-gradient(180deg, #140a1d, #0a0311)',
           padding: 'clamp(28px, 5vw, 56px)',
           overflow: 'hidden',
         }}

@@ -1,6 +1,6 @@
 {
   "name": "aerocraft-portal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,10 +13,11 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@forgedevstack/aerocraft": "1.0.0",
+    "@forgedevstack/aerocraft": "file:../aerocraft",
     "@forgedevstack/anvil": "^1.0.6",
     "@forgedevstack/bear": "^1.2.2",
     "@forgedevstack/forge-compass": "^1.0.2",
+    "@forgedevstack/grid-table": "^1.0.8",
     "@forgedevstack/lingo": "^1.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

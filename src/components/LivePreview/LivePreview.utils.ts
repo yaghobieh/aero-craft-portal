@@ -49,6 +49,29 @@ export function findRuleForClass(css: string, className: string): string {
   return parts.join('\n').trim();
 }
 
+export function buildAggregatedRulesCss(
+  staticCss: string,
+  dynamicCss: string,
+  classNames: string[],
+): string {
+  const blocks: string[] = [];
+  for (const cls of classNames) {
+    const fromStatic = findRuleForClass(staticCss, cls);
+    const fromDyn = fromStatic ? '' : findRuleForClass(dynamicCss, cls);
+    const body = fromStatic || fromDyn;
+    const sel = escapeCssSelector(cls);
+    if (body) {
+      blocks.push(`.${sel} {`);
+      blocks.push(body);
+      blocks.push('}');
+    } else {
+      blocks.push(`/* .${sel} — (no rule in default bundle) */`);
+    }
+    blocks.push('');
+  }
+  return blocks.join('\n').trim();
+}
+
 /**
  * Extracts a unique list of class names from HTML markup by reading class="..." attributes.
  */

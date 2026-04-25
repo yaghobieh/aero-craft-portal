@@ -18,5 +18,5 @@ export const LIVE_PREVIEW_BASE_CSS = `
     min-height: 100%;
     box-sizing: border-box;
   }
-  [data-ac-block] { outline: 1px dashed rgba(249,31,125,0.35); border-radius: 8px; }
+  [data-ac-block] { outline: 1px dashed rgba(59,130,246,0.35); border-radius: 8px; }
 `;

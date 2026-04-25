@@ -3,7 +3,7 @@ import { GradientTextAc } from '@components/GradientTextAc';
 import { AC_GRADIENT_HERO } from '@const/theme.const';
 
 interface CompareRow {
-  tailwind: string;
+  utilityStack: string;
   aerocraft: string;
   label: string;
 }
@@ -11,32 +11,32 @@ interface CompareRow {
 const ROWS: CompareRow[] = [
   {
     label: 'Horizontal center',
-    tailwind: 'flex flex-row items-center justify-center',
+    utilityStack: 'flex flex-row items-center justify-center',
     aerocraft: 'flex-row-center',
   },
   {
     label: 'Full-bleed fixed',
-    tailwind: 'fixed top-0 right-0 bottom-0 left-0',
+    utilityStack: 'fixed top-0 right-0 bottom-0 left-0',
     aerocraft: 'fixed-full',
   },
   {
     label: 'Square card',
-    tailwind: 'w-16 h-16',
+    utilityStack: 'w-16 h-16',
     aerocraft: 'size-16',
   },
   {
     label: 'Clamp to 2 lines',
-    tailwind: 'overflow-hidden text-ellipsis display-webkit-box line-clamp-2',
+    utilityStack: 'overflow-hidden text-ellipsis display-webkit-box line-clamp-2',
     aerocraft: 'text-clamp-2',
   },
   {
     label: 'Absolute center',
-    tailwind: 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+    utilityStack: 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
     aerocraft: 'absolute-center',
   },
   {
     label: 'Grid 3 auto',
-    tailwind: 'grid grid-cols-3 gap-4',
+    utilityStack: 'grid grid-cols-3 gap-4',
     aerocraft: 'grid-cols-3 gap-4',
   },
 ];
@@ -79,7 +79,7 @@ export function HomeCompare() {
             borderBottom: '1px solid var(--bear-border-default)',
           }}
         >
-          <span>Tailwind</span>
+          <span>Utility stack</span>
           <span>AeroCraft</span>
         </div>
 
@@ -106,16 +106,16 @@ export function HomeCompare() {
                   wordBreak: 'break-word',
                 }}
               >
-                {row.tailwind}
+                {row.utilityStack}
               </code>
             </div>
             <div
               style={{
                 padding: '16px 20px',
-                background: 'linear-gradient(100deg, rgba(249,31,125,0.08), rgba(195,77,247,0.06))',
+                background: 'linear-gradient(100deg, rgba(59,130,246,0.10), rgba(99,102,241,0.08))',
               }}
             >
-              <Typography variant="caption" className="ac-pink-accent">
+              <Typography variant="caption" className="ac-accent-caption">
                 Shortcut
               </Typography>
               <code
@@ -125,7 +125,7 @@ export function HomeCompare() {
                   fontFamily: 'Fira Code, ui-monospace, monospace',
                   fontSize: 14,
                   fontWeight: 600,
-                  color: '#ffb6d7',
+                  color: 'var(--bear-primary-400)',
                 }}
               >
                 {row.aerocraft}

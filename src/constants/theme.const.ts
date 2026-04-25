@@ -1,42 +1,41 @@
 import type { BearThemeOverride } from '@forgedevstack/bear';
-import { portalBrand } from '../config/portal.config';
 
 export const AC_PRIMARY_SCALE = {
-  50: '#fff1f7',
-  100: '#ffdcec',
-  200: '#ffb6d7',
-  300: '#ff86bb',
-  400: '#ff4f9b',
-  500: '#f91f7d',
-  600: portalBrand.primaryHex,
-  700: '#ae0a53',
-  800: '#7d0740',
-  900: '#4f032a',
-  950: '#2a0116',
+  50: '#eff6ff',
+  100: '#dbeafe',
+  200: '#bfdbfe',
+  300: '#93c5fd',
+  400: '#60a5fa',
+  500: '#3b82f6',
+  600: '#2563eb',
+  700: '#1d4ed8',
+  800: '#1e40af',
+  900: '#1e3a8a',
+  950: '#172554',
 };
 
 export const AC_SECONDARY_SCALE = {
-  50: '#fdf2ff',
-  100: '#f8dcff',
-  200: '#eeb2ff',
-  300: '#dd7dff',
-  400: '#c34df7',
-  500: '#a324dd',
-  600: '#8315b5',
-  700: '#670e8e',
-  800: '#4a096a',
-  900: '#2d0544',
-  950: '#180128',
+  50: '#eef2ff',
+  100: '#e0e7ff',
+  200: '#c7d2fe',
+  300: '#a5b4fc',
+  400: '#818cf8',
+  500: '#6366f1',
+  600: '#4f46e5',
+  700: '#4338ca',
+  800: '#3730a3',
+  900: '#312e81',
+  950: '#1e1b4b',
 };
 
 export const AC_ACCENT_SCALE = {
-  300: '#ffbd8b',
-  400: '#ffa362',
-  500: '#ff8a3c',
-  600: '#e66a1f',
+  300: '#a5b4fc',
+  400: '#818cf8',
+  500: '#6366f1',
+  600: '#4f46e5',
 };
 
-export const AC_PRIMARY_HEX = AC_PRIMARY_SCALE[600];
+export const AC_PRIMARY_HEX = AC_PRIMARY_SCALE[500];
 export const AC_PRIMARY_HEX_500 = AC_PRIMARY_SCALE[500];
 export const AC_SECONDARY_HEX = AC_SECONDARY_SCALE[500];
 export const AC_ACCENT_HEX = AC_ACCENT_SCALE[500];
@@ -44,7 +43,7 @@ export const AC_ACCENT_HEX = AC_ACCENT_SCALE[500];
 export const AC_GRADIENT_HERO = [
   AC_PRIMARY_SCALE[600],
   AC_PRIMARY_SCALE[400],
-  AC_SECONDARY_SCALE[400],
+  AC_SECONDARY_SCALE[500],
   AC_SECONDARY_SCALE[700],
 ];
 
@@ -52,15 +51,24 @@ export const AC_GRADIENT_SOFT = `linear-gradient(135deg, ${AC_PRIMARY_SCALE[600]
 
 export const AC_ACCENT = AC_PRIMARY_SCALE[600];
 
-export const AC_PRIMARY_SOFT_BG = 'rgba(249, 31, 125, 0.10)';
-export const AC_PRIMARY_TILE_BG = 'rgba(249, 31, 125, 0.14)';
-export const AC_PRIMARY_TILE_ACCENT_BG = 'rgba(249, 31, 125, 0.22)';
-export const AC_PRIMARY_OUTLINE = 'rgba(249, 31, 125, 0.35)';
-export const AC_SECONDARY_SOFT_BG = 'rgba(163, 36, 221, 0.12)';
+export const AC_PRIMARY_SOFT_BG = 'rgba(59, 130, 246, 0.10)';
+export const AC_PRIMARY_TILE_BG = 'rgba(59, 130, 246, 0.14)';
+export const AC_PRIMARY_TILE_ACCENT_BG = 'rgba(59, 130, 246, 0.22)';
+export const AC_PRIMARY_OUTLINE = 'rgba(59, 130, 246, 0.35)';
+export const AC_SECONDARY_SOFT_BG = 'rgba(99, 102, 241, 0.12)';
+
+const PLUS_JAKARTA_STACK = `'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif`;
+const FIRA_CODE_STACK = `'Fira Code', 'Cascadia Code', 'JetBrains Mono', ui-monospace, monospace`;
 
 export const AEROCRAFT_THEME: BearThemeOverride = {
   colors: {
     primary: AC_PRIMARY_SCALE,
     secondary: AC_SECONDARY_SCALE,
+  },
+  typography: {
+    fontFamily: {
+      sans: PLUS_JAKARTA_STACK,
+      mono: FIRA_CODE_STACK,
+    },
   },
 };

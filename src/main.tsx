@@ -2,10 +2,12 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BearProvider } from '@forgedevstack/bear';
 import '@forgedevstack/bear/styles.css';
+import '@forgedevstack/grid-table/grid-table.css';
 import { App } from './App';
 import { I18nContext, useI18nState } from './i18n/index';
 import { AEROCRAFT_THEME } from './constants/theme.const';
-import './styles/index.css';
+import './styles/aerocraft.css';
+import './styles/portal-surfaces.css';
 
 function Root() {
   const i18n = useI18nState('en');

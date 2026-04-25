@@ -2,7 +2,7 @@ import { Typography } from '@forgedevstack/bear';
 
 interface ClassBadgeProps {
   label: string;
-  variant?: 'shortcut' | 'tailwind';
+  variant?: 'shortcut' | 'recipe';
 }
 
 export function ClassBadge({ label, variant = 'shortcut' }: ClassBadgeProps) {

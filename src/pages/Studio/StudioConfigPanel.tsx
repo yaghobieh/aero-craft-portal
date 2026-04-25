@@ -65,7 +65,7 @@ export const DEFAULT_STUDIO_CONFIG: StudioConfigState = {
   groups: DEFAULT_GROUPS,
   fontDisplay: 'Plus Jakarta Sans',
   fontMono: 'Fira Code',
-  brandPrimary: '#d70f66',
+  brandPrimary: '#2563eb',
   brandSecondary: '#a324dd',
   brandAccent: '#ff8a3c',
 };

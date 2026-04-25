@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import { Flex, Spinner } from '@forgedevstack/bear';
+import { Button, CodeBlock, Flex, Spinner } from '@forgedevstack/bear';
 import aerocraftCss from '@forgedevstack/aerocraft/styles.css?raw';
 import { LIVE_PREVIEW_DEFAULT_MIN_HEIGHT_PX, LIVE_PREVIEW_TOOLTIP_OFFSET_PX } from '@const/numbers.const';
 import {
@@ -12,7 +12,13 @@ import {
 } from '@const/strings.const';
 import { LIVE_PREVIEW_BASE_CSS } from './LivePreview.const';
 import type { LivePreviewProps } from './LivePreview.types';
-import { buildArbitraryCss, extractClassesFromMarkup, extractPreviewSampleFromDeclarations, findRuleForClass } from './LivePreview.utils';
+import {
+  buildAggregatedRulesCss,
+  buildArbitraryCss,
+  extractClassesFromMarkup,
+  extractPreviewSampleFromDeclarations,
+  findRuleForClass,
+} from './LivePreview.utils';
 
 export function LivePreview(props: LivePreviewProps) {
   const markup = props.markup;
@@ -20,14 +26,22 @@ export function LivePreview(props: LivePreviewProps) {
   const label = props.label;
   const background = props.background ?? LIVE_PREVIEW_DEFAULT_BACKGROUND_HEX;
   const showClasses = props.showClasses ?? true;
+  const showGeneratedCss = props.showGeneratedCss ?? false;
+  const generatedLabels = props.generatedCssLabels;
 
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [hoverPos, setHoverPos] = useState<{ x: number; y: number } | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [generatedOpen, setGeneratedOpen] = useState(false);
 
   const allClasses = useMemo(() => extractClassesFromMarkup(markup), [markup]);
   const arbitraryCss = useMemo(() => buildArbitraryCss(allClasses), [allClasses]);
+
+  const aggregatedCss = useMemo(
+    () => buildAggregatedRulesCss(aerocraftCss, arbitraryCss, allClasses),
+    [arbitraryCss, allClasses],
+  );
 
   const srcDoc = useMemo(() => {
     const bg = background;
@@ -94,18 +108,41 @@ export function LivePreview(props: LivePreviewProps) {
       </div>
 
       {showClasses && classes.length > 0 && (
-        <Flex direction="row" gap={1} className="ac-live-preview__classes">
-          <span className="ac-live-preview__classes-label">Classes:</span>
-          {classes.map((cls) => (
-            <span
-              key={cls}
-              onMouseEnter={(e) => onEnterChip(cls, e)}
-              onMouseLeave={onLeaveChip}
-              className={`ac-live-preview__chip${hovered === cls ? ' is-hovered' : EMPTY_STRING}`}
-            >
-              {cls}
-            </span>
-          ))}
+        <Flex direction="column" gap={2} className="ac-live-preview__meta">
+          <Flex direction="row" gap={1} className="ac-live-preview__classes" wrap="wrap">
+            <span className="ac-live-preview__classes-label">Classes:</span>
+            {classes.map((cls) => (
+              <span
+                key={cls}
+                onMouseEnter={(e) => onEnterChip(cls, e)}
+                onMouseLeave={onLeaveChip}
+                className={`ac-live-preview__chip${hovered === cls ? ' is-hovered' : EMPTY_STRING}`}
+              >
+                {cls}
+              </span>
+            ))}
+          </Flex>
+          {showGeneratedCss && generatedLabels ? (
+            <Flex direction="column" gap={2} className="ac-live-preview__generated">
+              <Button
+                variant="outline"
+                size="sm"
+                type="button"
+                onClick={() => setGeneratedOpen((o) => !o)}
+              >
+                {generatedOpen ? generatedLabels.hide : generatedLabels.show}
+              </Button>
+              {generatedOpen ? (
+                <CodeBlock
+                  code={aggregatedCss}
+                  language="css"
+                  title={generatedLabels.title}
+                  showLineNumbers={false}
+                  copyable
+                />
+              ) : null}
+            </Flex>
+          ) : null}
         </Flex>
       )}
 

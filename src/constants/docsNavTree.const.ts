@@ -31,6 +31,7 @@ export const DOCS_NAV_TREE: DocsNavNode[] = [
     children: [
       { id: 'core-concepts/dark-mode', path: 'core-concepts/dark-mode' },
       { id: 'core-concepts/theme', path: 'core-concepts/theme' },
+      { id: 'core-concepts/component-recipes', path: 'core-concepts/component-recipes' },
       { id: 'core-concepts/responsive', path: 'core-concepts/responsive' },
       { id: 'core-concepts/colors', path: 'core-concepts/colors' },
       { id: 'core-concepts/brand-palette', path: 'core-concepts/brand-palette' },

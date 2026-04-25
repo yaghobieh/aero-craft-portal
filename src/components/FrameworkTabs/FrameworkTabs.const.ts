@@ -24,12 +24,12 @@ export const FRAMEWORKS: FrameworkEntry[] = [
     id: 'react',
     label: 'React',
     install: 'npm i @forgedevstack/aerocraft postcss',
-    entryImport: `import './styles/index.css';`,
+    entryImport: `import './styles/aerocraft.css';`,
     blocks: [
       { title: 'src/main.tsx', language: 'typescript', code: `import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './styles/index.css';
+import './styles/aerocraft.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<App />);` },
       { title: 'App.tsx', language: 'tsx', code: `export default function App() {
@@ -42,7 +42,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(<App />);` },
 }` },
       { title: 'postcss.config.ts', language: 'typescript', code: POSTCSS_CONFIG },
       { title: 'aerocraft.config.ts', language: 'typescript', code: AERO_CONFIG },
-      { title: 'src/styles/index.css', language: 'css', code: CSS_ENTRY },
+      { title: 'src/styles/aerocraft.css', language: 'css', code: CSS_ENTRY },
     ],
     note: 'Works out of the box with Vite, CRA, Next.js, and any bundler that runs PostCSS.',
   },
@@ -50,11 +50,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(<App />);` },
     id: 'vue',
     label: 'Vue',
     install: 'npm i @forgedevstack/aerocraft postcss',
-    entryImport: `import './styles/index.css';`,
+    entryImport: `import './styles/aerocraft.css';`,
     blocks: [
       { title: 'src/main.ts', language: 'typescript', code: `import { createApp } from 'vue';
 import App from './App.vue';
-import './styles/index.css';
+import './styles/aerocraft.css';
 
 createApp(App).mount('#app');` },
       { title: 'App.vue', language: 'html', code: `<template>
@@ -72,9 +72,9 @@ createApp(App).mount('#app');` },
     id: 'angular',
     label: 'Angular',
     install: 'npm i @forgedevstack/aerocraft postcss postcss-loader',
-    entryImport: `@import "./styles/index.css";`,
+    entryImport: `@import "./styles/aerocraft.css";`,
     blocks: [
-      { title: 'src/styles.scss', language: 'scss', code: `@import "./styles/index.css";
+      { title: 'src/styles.scss', language: 'scss', code: `@import "./styles/aerocraft.css";
 
 /* Angular passes SCSS through PostCSS; @aerocraft expands normally. */` },
       { title: 'app.component.html', language: 'html', code: `<main class="flex-col-center gap-4 p-8">
@@ -93,7 +93,7 @@ module.exports = defineConfig({ responsive: true, content: ['src/**/*.{ts,html}'
     id: 'svelte',
     label: 'Svelte',
     install: 'npm i -D @forgedevstack/aerocraft postcss svelte-preprocess',
-    entryImport: `import './styles/index.css';`,
+    entryImport: `import './styles/aerocraft.css';`,
     blocks: [
       { title: 'svelte.config.js', language: 'javascript', code: `import sveltePreprocess from 'svelte-preprocess';
 import { aerocraftPlugin } from '@forgedevstack/aerocraft/postcss';
@@ -102,7 +102,7 @@ export default {
   preprocess: sveltePreprocess({ postcss: { plugins: [aerocraftPlugin()] } }),
 };` },
       { title: 'src/main.ts', language: 'typescript', code: `import App from './App.svelte';
-import './styles/index.css';
+import './styles/aerocraft.css';
 
 new App({ target: document.getElementById('app')! });` },
       { title: 'App.svelte', language: 'html', code: `<main class="flex-col-center gap-4 p-8">
@@ -142,15 +142,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     id: 'nuxt',
     label: 'Nuxt',
     install: 'npm i @forgedevstack/aerocraft postcss',
-    entryImport: `css: ['~/assets/index.css']`,
+    entryImport: `css: ['~/assets/aerocraft.css']`,
     blocks: [
       { title: 'nuxt.config.ts', language: 'typescript', code: `import { aerocraftPlugin } from '@forgedevstack/aerocraft/postcss';
 
 export default defineNuxtConfig({
-  css: ['~/assets/index.css'],
+  css: ['~/assets/aerocraft.css'],
   postcss: { plugins: { '@forgedevstack/aerocraft/postcss': {} } },
 });` },
-      { title: 'assets/index.css', language: 'css', code: CSS_ENTRY },
+      { title: 'assets/aerocraft.css', language: 'css', code: CSS_ENTRY },
       { title: 'pages/index.vue', language: 'html', code: `<template>
   <main class="flex-col-center gap-4 p-8">
     <h1 class="font-bold">AeroCraft + Nuxt</h1>

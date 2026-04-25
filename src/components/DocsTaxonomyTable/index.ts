@@ -1,0 +1,1 @@
+export { DocsTaxonomyTable } from './DocsTaxonomyTable';

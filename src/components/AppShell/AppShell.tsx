@@ -23,10 +23,10 @@ export function AppShell({ children }: AppShellProps) {
   }, []);
 
   return (
-    <Flex direction="column" style={{ minHeight: '100vh', width: '100%' }}>
+    <Flex direction="column" className="min-h-screen w-full">
       <TopNavbar onOpenSearch={() => setSearchOpen(true)} />
       <CommandPalette open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <Flex direction="column" style={{ flex: 1, width: '100%', minWidth: 0 }}>
+      <Flex direction="column" className="flex-1 w-full min-w-0">
         {children}
       </Flex>
     </Flex>

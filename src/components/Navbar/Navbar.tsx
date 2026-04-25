@@ -30,6 +30,9 @@ export function Navbar() {
           <Link to={ROUTES.DOCS}>
             <Button variant="ghost" size="sm">{t.nav.docs}</Button>
           </Link>
+          <Link to={ROUTES.DOCS_COMPONENT_PRESETS}>
+            <Button variant="ghost" size="sm">{t.nav.components}</Button>
+          </Link>
           <Link to={ROUTES.STUDIO}>
             <Button variant="ghost" size="sm">{t.nav.studio}</Button>
           </Link>

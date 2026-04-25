@@ -21,15 +21,15 @@ export function HomePalette() {
           Crafted <GradientTextAc colors={AC_GRADIENT_HERO}>with intent</GradientTextAc>
         </Typography>
         <Typography variant="body1" color="muted" className="ac-lead">
-          A magenta-to-orchid dual scale paired with a warm coral accent. Pull the full palette via
+          A blue-to-indigo primary scale with a violet secondary. Pull tokens via
           <code className="ac-inline-code"> var(--bear-primary-500)</code>,
-          <code className="ac-inline-code"> var(--bear-secondary-500)</code>, or consume the hex constants from <code className="ac-inline-code">theme.const.ts</code>.
+          <code className="ac-inline-code"> var(--bear-secondary-500)</code>, or the hex maps in <code className="ac-inline-code">theme.const.ts</code>.
         </Typography>
       </Flex>
 
-      <PaletteRow label="Primary — AeroCraft pink" scale={AC_PRIMARY_SCALE} keys={SWATCH_KEYS} />
-      <PaletteRow label="Secondary — Orchid" scale={AC_SECONDARY_SCALE} keys={SWATCH_KEYS} />
-      <PaletteRow label="Accent — Coral" scale={AC_ACCENT_SCALE} keys={ACCENT_KEYS} />
+      <PaletteRow label="Primary — Blue" scale={AC_PRIMARY_SCALE} keys={SWATCH_KEYS} />
+      <PaletteRow label="Secondary — Indigo" scale={AC_SECONDARY_SCALE} keys={SWATCH_KEYS} />
+      <PaletteRow label="Accent — Violet" scale={AC_ACCENT_SCALE} keys={ACCENT_KEYS} />
     </Flex>
   );
 }

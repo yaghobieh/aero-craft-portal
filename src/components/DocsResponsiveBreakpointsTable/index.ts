@@ -1,0 +1,1 @@
+export { DocsResponsiveBreakpointsTable } from './DocsResponsiveBreakpointsTable';

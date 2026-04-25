@@ -38,6 +38,7 @@ export const DOCS_NAV_ES: Messages['docsNav'] = {
   'core-concepts': 'Conceptos básicos',
   'core-concepts/dark-mode': 'Modo oscuro',
   'core-concepts/theme': 'Tokens de tema',
+  'core-concepts/component-recipes': 'Presets de componentes',
   'core-concepts/responsive': 'Responsive',
   'core-concepts/colors': 'Colores',
   'core-concepts/brand-palette': 'Paleta de marca',

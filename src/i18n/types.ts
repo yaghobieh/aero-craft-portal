@@ -12,17 +12,41 @@ export interface Messages {
   nav: {
     home: string;
     docs: string;
+    components: string;
     playground: string;
     github: string;
     sandbox: string;
     studio: string;
+    premium: string;
+    themeLight: string;
+    themeDark: string;
+    openNpm: string;
+    openGithub: string;
+    localeEn: string;
+    localeEs: string;
+    searchShortcut: string;
+  };
+  componentsPage: {
+    kicker: string;
+    title: string;
+    lead: string;
+    badgePremium: string;
+    ctaDoc: string;
+    galleryTitle: string;
+    tableTitle: string;
+    colName: string;
+    colPurpose: string;
+    colConfig: string;
+    showGeneratedCss: string;
+    hideGeneratedCss: string;
+    generatedCssTitle: string;
   };
   sidebar: {
     ecosystem: string;
     menu: string;
   };
   hero: {
-    badge: string;
+    badgeAvailability: string;
     title: string;
     subtitle: string;
     ctaStart: string;
@@ -49,6 +73,23 @@ export interface Messages {
     demoBodyAfter: string;
     demoTryIt: string;
     demoDocs: string;
+    demoButtonLabel: string;
+  };
+  homeComponentPresets: {
+    kicker: string;
+    badgePremium: string;
+    title: string;
+    titleGradient: string;
+    lead: string;
+    ctaStudio: string;
+    ctaDocs: string;
+    cardButton: string;
+    cardInput: string;
+    cardSelect: string;
+    cardBox: string;
+    selectOptionA: string;
+    selectOptionB: string;
+    boxBody: string;
   };
   homeShowcase: {
     colorsTitle: string;

@@ -29,7 +29,7 @@ export default defineConfig({
   mode: 'standalone',
   customShortcuts: {
     'gap-{{10px}}': {
-      tailwind: 'gap-[10px]',
+      utilityRecipe: 'gap-[10px]',
       css: { gap: '10px' },
       description: 'Fixed 10px gap',
       group: 'gap',

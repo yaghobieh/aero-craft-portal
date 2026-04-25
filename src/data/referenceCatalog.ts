@@ -23,7 +23,7 @@ export interface CatalogEntry {
 }
 
 const TILE =
-  'inline-flex items-center justify-center px-4 py-2 rounded-md background-[#d70f66] color-white font-semibold';
+  'inline-flex items-center justify-center px-4 py-2 rounded-md background-[#2563eb] color-white font-semibold';
 
 const CAT_LABELS: Record<PortalCategoryId, string> = Object.fromEntries(
   PORTAL_CATEGORIES.map((c) => [c.id, c.label]),
@@ -80,7 +80,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'aspect-video', styles: 'aspect-ratio: 16 / 9;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-48 ${cls} background-[#d70f66] rounded-md flex items-center justify-center color-white font-semibold">${cls}</div></div>`,
+      `<div class="p-4"><div class="w-48 ${cls} background-[#2563eb] rounded-md flex items-center justify-center color-white font-semibold">${cls}</div></div>`,
     customValue: {
       description: 'Pick any ratio with bracket notation.',
       bracketCode: `<div class="aspect-[4/3] ...">
@@ -633,7 +633,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'color-black', styles: 'color: #000;' },
       { name: 'color-white', styles: 'color: #fff;' },
       { name: 'color-gray-500', styles: 'color: #6b7280;' },
-      { name: 'text-[#d70f66]', styles: 'color: #d70f66;' },
+      { name: 'text-[#2563eb]', styles: 'color: #2563eb;' },
     ],
     makeExample: (cls) =>
       `<div class="p-4 background-gray-100 rounded-md"><p class="${cls} font-semibold">${cls} — the quick brown fox</p></div>`,
@@ -660,13 +660,13 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
     category: 'typography',
     description: 'Utilities for setting the color of the text decoration line.',
     classes: [
-      { name: 'decoration-pink-500', styles: 'text-decoration-color: #f91f7d;' },
+      { name: 'decoration-[#3b82f6]', styles: 'text-decoration-color: #3b82f6;' },
       { name: 'decoration-black', styles: 'text-decoration-color: #000;' },
     ],
     makeExample: (cls) =>
       `<div class="p-4"><p class="underline ${cls} font-semibold">underlined with ${cls}</p></div>`,
     customValue: {
-      bracketCode: `<p class="underline decoration-[#d70f66]">custom color</p>`,
+      bracketCode: `<p class="underline decoration-[#2563eb]">custom color</p>`,
     },
   }),
 
@@ -873,7 +873,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'background-black', styles: 'background-color: #000;' },
       { name: 'background-white', styles: 'background-color: #fff;' },
       { name: 'bg-transparent', styles: 'background-color: transparent;' },
-      { name: 'background-[#d70f66]', styles: 'background-color: #d70f66;' },
+      { name: 'background-[#2563eb]', styles: 'background-color: #2563eb;' },
     ],
     makeExample: (cls) =>
       `<div class="p-4"><div class="${cls} h-16 w-full rounded-md border border-color-gray-200"></div></div>`,
@@ -962,7 +962,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'rounded-full', styles: 'border-radius: 9999px;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-20 h-20 background-[#d70f66] ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-20 h-20 background-[#2563eb] ${cls}"></div></div>`,
   }),
 
   'border-width': simpleEntry({
@@ -987,7 +987,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
     classes: [
       { name: 'border-black', styles: 'border-color: #000;' },
       { name: 'border-transparent', styles: 'border-color: transparent;' },
-      { name: 'border-[#d70f66]', styles: 'border-color: #d70f66;' },
+      { name: 'border-[#2563eb]', styles: 'border-color: #2563eb;' },
     ],
     makeExample: (cls) =>
       `<div class="p-4"><div class="w-24 h-16 border-4 ${cls} rounded-md"></div></div>`,
@@ -1021,7 +1021,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'outline-8', styles: 'outline-width: 8px;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-20 h-16 background-white outline outline-[#d70f66] ${cls} rounded-md"></div></div>`,
+      `<div class="p-4"><div class="w-20 h-16 background-white outline outline-[#2563eb] ${cls} rounded-md"></div></div>`,
   }),
 
   'outline-color': simpleEntry({
@@ -1030,7 +1030,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
     description: "Utilities for controlling the color of an element's outline.",
     classes: [
       { name: 'outline-black', styles: 'outline-color: #000;' },
-      { name: 'outline-[#d70f66]', styles: 'outline-color: #d70f66;' },
+      { name: 'outline-[#2563eb]', styles: 'outline-color: #2563eb;' },
     ],
     makeExample: (cls) =>
       `<div class="p-4"><div class="w-20 h-16 background-white outline outline-4 ${cls} rounded-md"></div></div>`,
@@ -1048,7 +1048,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'outline-double', styles: 'outline-style: double;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-20 h-16 background-white outline-4 outline-[#d70f66] ${cls} rounded-md"></div></div>`,
+      `<div class="p-4"><div class="w-20 h-16 background-white outline-4 outline-[#2563eb] ${cls} rounded-md"></div></div>`,
   }),
 
   'outline-offset': simpleEntry({
@@ -1063,7 +1063,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'outline-offset-8', styles: 'outline-offset: 8px;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-6"><div class="w-20 h-16 background-white outline outline-4 outline-[#d70f66] ${cls} rounded-md"></div></div>`,
+      `<div class="p-6"><div class="w-20 h-16 background-white outline outline-4 outline-[#2563eb] ${cls} rounded-md"></div></div>`,
   }),
 
   // ============================== EFFECTS ==============================
@@ -1095,7 +1095,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'text-shadow-none', styles: 'text-shadow: none;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><p class="text-3xl font-bold text-[#d70f66] ${cls}">${cls}</p></div>`,
+      `<div class="p-4"><p class="text-3xl font-bold text-[#2563eb] ${cls}">${cls}</p></div>`,
   }),
 
   opacity: simpleEntry({
@@ -1110,7 +1110,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'opacity-100', styles: 'opacity: 1;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-20 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-20 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
 
   'mix-blend-mode': simpleEntry({
@@ -1263,7 +1263,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'blur-xl', styles: 'filter: blur(24px);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   brightness: simpleEntry({
     slug: 'brightness',
@@ -1277,7 +1277,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'brightness-200', styles: 'filter: brightness(2);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   contrast: simpleEntry({
     slug: 'contrast',
@@ -1290,7 +1290,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'contrast-200', styles: 'filter: contrast(2);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   'drop-shadow': simpleEntry({
     slug: 'drop-shadow',
@@ -1303,7 +1303,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'drop-shadow-lg', styles: 'filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04));' },
     ],
     makeExample: (cls) =>
-      `<div class="p-6"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-6"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   grayscale: simpleEntry({
     slug: 'grayscale',
@@ -1314,7 +1314,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'grayscale', styles: 'filter: grayscale(1);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   'hue-rotate': simpleEntry({
     slug: 'hue-rotate',
@@ -1327,7 +1327,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'hue-rotate-180', styles: 'filter: hue-rotate(180deg);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   invert: simpleEntry({
     slug: 'invert',
@@ -1338,7 +1338,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'invert', styles: 'filter: invert(1);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   saturate: simpleEntry({
     slug: 'saturate',
@@ -1352,7 +1352,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'saturate-200', styles: 'filter: saturate(2);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   sepia: simpleEntry({
     slug: 'sepia',
@@ -1363,7 +1363,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'sepia', styles: 'filter: sepia(1);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-24 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-24 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   'backdrop-filter': simpleEntry({
     slug: 'backdrop-filter',
@@ -1577,7 +1577,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'animate-bounce', styles: 'animation: bounce 1s infinite;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><div class="w-10 h-10 background-[#d70f66] rounded-full ${cls}"></div></div>`,
+      `<div class="p-4"><div class="w-10 h-10 background-[#2563eb] rounded-full ${cls}"></div></div>`,
   }),
 
   // ============================== TRANSFORMS ==============================
@@ -1622,7 +1622,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: '-rotate-45', styles: 'transform: rotate(-45deg);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-6"><div class="w-16 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-6"><div class="w-16 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   scale: simpleEntry({
     slug: 'scale',
@@ -1637,7 +1637,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'scale-150', styles: 'transform: scale(1.5);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-6"><div class="w-16 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-6"><div class="w-16 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   skew: simpleEntry({
     slug: 'skew',
@@ -1651,7 +1651,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'skew-y-6', styles: 'transform: skewY(6deg);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-6"><div class="w-16 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-6"><div class="w-16 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
   transform: simpleEntry({
     slug: 'transform',
@@ -1694,7 +1694,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: '-translate-x-4', styles: 'transform: translateX(-1rem);' },
     ],
     makeExample: (cls) =>
-      `<div class="p-6"><div class="w-16 h-16 background-[#d70f66] rounded-md ${cls}"></div></div>`,
+      `<div class="p-6"><div class="w-16 h-16 background-[#2563eb] rounded-md ${cls}"></div></div>`,
   }),
 
   // ============================== INTERACTIVITY ==============================
@@ -1703,7 +1703,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
     category: 'interactivity',
     description: "Utilities for controlling the accented color of form controls.",
     classes: [
-      { name: 'accent-[#d70f66]', styles: 'accent-color: #d70f66;' },
+      { name: 'accent-[#2563eb]', styles: 'accent-color: #2563eb;' },
       { name: 'accent-black', styles: 'accent-color: #000;' },
     ],
     makeExample: (cls) =>
@@ -1723,7 +1723,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
     category: 'interactivity',
     description: 'Utilities for controlling the color of the text input cursor.',
     classes: [
-      { name: 'caret-[#d70f66]', styles: 'caret-color: #d70f66;' },
+      { name: 'caret-[#2563eb]', styles: 'caret-color: #2563eb;' },
       { name: 'caret-black', styles: 'caret-color: #000;' },
     ],
     makeExample: (cls) =>
@@ -1894,7 +1894,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'fill-none', styles: 'fill: none;' },
       { name: 'fill-current', styles: 'fill: currentColor;' },
       { name: 'fill-black', styles: 'fill: #000;' },
-      { name: 'fill-[#d70f66]', styles: 'fill: #d70f66;' },
+      { name: 'fill-[#2563eb]', styles: 'fill: #2563eb;' },
     ],
     makeExample: (cls) =>
       `<div class="p-4"><svg viewBox="0 0 24 24" class="w-10 h-10 ${cls}"><circle cx="12" cy="12" r="10" /></svg></div>`,
@@ -1907,7 +1907,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'stroke-none', styles: 'stroke: none;' },
       { name: 'stroke-current', styles: 'stroke: currentColor;' },
       { name: 'stroke-black', styles: 'stroke: #000;' },
-      { name: 'stroke-[#d70f66]', styles: 'stroke: #d70f66;' },
+      { name: 'stroke-[#2563eb]', styles: 'stroke: #2563eb;' },
     ],
     makeExample: (cls) =>
       `<div class="p-4"><svg viewBox="0 0 24 24" class="w-10 h-10 fill-none ${cls}" stroke-width="2"><circle cx="12" cy="12" r="10" /></svg></div>`,
@@ -1922,7 +1922,7 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
       { name: 'stroke-2', styles: 'stroke-width: 2;' },
     ],
     makeExample: (cls) =>
-      `<div class="p-4"><svg viewBox="0 0 24 24" class="w-10 h-10 fill-none stroke-[#d70f66] ${cls}"><circle cx="12" cy="12" r="10" /></svg></div>`,
+      `<div class="p-4"><svg viewBox="0 0 24 24" class="w-10 h-10 fill-none stroke-[#2563eb] ${cls}"><circle cx="12" cy="12" r="10" /></svg></div>`,
   }),
 
   // ============================== A11Y ==============================

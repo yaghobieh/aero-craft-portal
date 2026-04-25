@@ -25,7 +25,7 @@ function renderTokens(text: string, kind: 'class' | 'styles') {
 
 /**
  * Page template for a single utility property (e.g. `flex`, `gap`, `justify-content`).
- * Follows the structure of tailwindcss.com's per-property reference pages:
+ * Per-property reference layout (overview, quick reference, examples):
  *
  *   1. Category eyebrow + title + description
  *   2. Quick reference table (Class | Styles)
@@ -175,7 +175,7 @@ export function UtilityReferencePage(props: UtilityReferencePageProps) {
                 textTransform: 'uppercase',
                 padding: '3px 8px',
                 borderRadius: 999,
-                background: 'linear-gradient(90deg, #f91f7d, #c34df7)',
+                background: 'linear-gradient(90deg, #3b82f6, #6366f1)',
                 color: '#fff',
               }}
             >

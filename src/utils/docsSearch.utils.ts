@@ -13,6 +13,7 @@ export function buildDocsSearchIndex(t: Messages): SearchNavItem[] {
     { href: ROUTES.STUDIO, label: t.nav.studio, group: t.commandPalette.portalPages },
     { href: ROUTES.PLAYGROUND, label: t.nav.playground, group: t.commandPalette.portalPages },
     { href: ROUTES.DOCS, label: t.nav.docs, group: t.commandPalette.portalPages },
+    { href: ROUTES.DOCS_COMPONENT_PRESETS, label: t.nav.components, group: t.commandPalette.portalPages },
   ];
 
   for (const g of GROUP_ORDER) {

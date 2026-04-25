@@ -5,6 +5,7 @@ import { Layout } from '../Layout';
 import { isAppMainFullBleed } from '@const/appLayout.const';
 import { PageLoader } from '../PageLoader';
 import { AppFooter } from '../AppFooter';
+import { Seo } from '../Seo';
 
 export function AppContent() {
   const route = useRoute();
@@ -13,6 +14,7 @@ export function AppContent() {
 
   return (
     <Layout>
+      <Seo />
       <AppShell>
         <div className="ac-app-root-column">
           <div className={fullBleed ? 'ac-app-main ac-app-main--bleed' : 'ac-app-main ac-app-main--constrained'}>

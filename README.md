@@ -13,7 +13,8 @@ npm run build
 ## Layout
 
 - `aerocraft.config.js` — design tokens consumed by the PostCSS plugin
-- `src/styles/index.css` — `@aerocraft` entry and portal-specific layers
+- `src/styles/aerocraft.css` — `@aerocraft` entry
+- `src/styles/portal-surfaces.css` — tokens, Bear variables, and portal layout (imported after AeroCraft)
 - `/playground` — live HTML + AeroCraft preview (Bear `CodeEditor`)
 
 Release history for the library lives in the [AeroCraft CHANGELOG](https://github.com/yaghobieh/aerocraft/blob/main/CHANGELOG.md).

@@ -5,30 +5,30 @@ import { GradientTextAc } from '@components/GradientTextAc';
 import { AC_GRADIENT_HERO } from '@const/theme.const';
 
 const CODE_BUTTONS = `<div class="flex-row gap-4 flex-wrap items-center p-4">
-  <button type="button" class="px-4 py-2 rounded-md cursor-pointer font-semibold" style="background:#f91f7d;color:#fff;border:0">Primary</button>
-  <button type="button" class="px-4 py-2 rounded-md cursor-pointer font-semibold" style="background:transparent;color:#ff86bb;border:1px solid rgba(249,31,125,0.5)">Secondary</button>
-  <button type="button" class="px-4 py-2 rounded-md cursor-pointer font-semibold" style="background:rgba(255,255,255,0.06);color:#f7ecf4;border:0">Ghost</button>
+  <button type="button" class="px-4 py-2 rounded-md cursor-pointer font-semibold" style="background:#3b82f6;color:#fff;border:0">Primary</button>
+  <button type="button" class="px-4 py-2 rounded-md cursor-pointer font-semibold" style="background:transparent;color:#93c5fd;border:1px solid rgba(59,130,246,0.5)">Secondary</button>
+  <button type="button" class="px-4 py-2 rounded-md cursor-pointer font-semibold" style="background:rgba(255,255,255,0.06);color:var(--bear-text-primary);border:0">Ghost</button>
 </div>`;
 
 const CODE_CAROUSEL = `<div class="flex-row overflow-x-auto gap-3 p-4 scroll-smooth w-full">
-  <div class="flex-col-center flex-shrink-0 px-6 py-8 rounded-lg" style="background:linear-gradient(135deg,rgba(249,31,125,0.22),rgba(195,77,247,0.18));color:#fff;min-width:160px;font-weight:600">Slide 1</div>
-  <div class="flex-col-center flex-shrink-0 px-6 py-8 rounded-lg" style="background:rgba(249,31,125,0.14);color:#ffb6d7;min-width:160px;font-weight:600">Slide 2</div>
+  <div class="flex-col-center flex-shrink-0 px-6 py-8 rounded-lg" style="background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(195,77,247,0.18));color:#fff;min-width:160px;font-weight:600">Slide 1</div>
+  <div class="flex-col-center flex-shrink-0 px-6 py-8 rounded-lg" style="background:rgba(59,130,246,0.14);color:#ffb6d7;min-width:160px;font-weight:600">Slide 2</div>
   <div class="flex-col-center flex-shrink-0 px-6 py-8 rounded-lg" style="background:rgba(195,77,247,0.16);color:#eeb2ff;min-width:160px;font-weight:600">Slide 3</div>
-  <div class="flex-col-center flex-shrink-0 px-6 py-8 rounded-lg" style="background:rgba(255,255,255,0.04);color:#f7ecf4;min-width:160px;font-weight:600">Slide 4</div>
+  <div class="flex-col-center flex-shrink-0 px-6 py-8 rounded-lg" style="background:rgba(255,255,255,0.04);color:var(--bear-text-primary);min-width:160px;font-weight:600">Slide 4</div>
 </div>`;
 
 const CODE_NAV = `<header class="flex-row-center-between p-4 w-full gap-4" style="background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.08);border-radius:12px">
   <div class="flex-row items-center gap-3">
-    <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#f91f7d,#c34df7)"></div>
-    <span class="font-bold" style="color:#f7ecf4">AeroCraft</span>
+    <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#6366f1)"></div>
+    <span class="font-bold" style="color:var(--bear-text-primary)">AeroCraft</span>
     <nav class="flex-row gap-4 flex-wrap" style="margin-left:12px">
-      <a href="#docs" style="opacity:.85;color:#d0b7cd">Docs</a>
-      <a href="#studio" style="opacity:.85;color:#d0b7cd">Studio</a>
-      <a href="#github" style="opacity:.85;color:#d0b7cd">GitHub</a>
+      <a href="#docs" style="opacity:.85;color:#94a3b8">Docs</a>
+      <a href="#studio" style="opacity:.85;color:#94a3b8">Studio</a>
+      <a href="#github" style="opacity:.85;color:#94a3b8">GitHub</a>
     </nav>
   </div>
   <div class="flex-row gap-2 items-center">
-    <button type="button" class="px-3 py-1.5 rounded-md cursor-pointer text-sm font-semibold" style="background:linear-gradient(90deg,#f91f7d,#c34df7);color:#fff;border:0">Get started</button>
+    <button type="button" class="px-3 py-1.5 rounded-md cursor-pointer text-sm font-semibold" style="background:linear-gradient(90deg,#3b82f6,#6366f1);color:#fff;border:0">Get started</button>
   </div>
 </header>`;
 

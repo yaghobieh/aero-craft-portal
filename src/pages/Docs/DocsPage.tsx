@@ -17,7 +17,6 @@ import { DocGroupReference } from '@components/DocGroupReference';
 import { useI18n } from '@i18n/index';
 import { AEROCRAFT_VERSION } from '@const/routes.const';
 import { DocsSidebar } from '@components/DocsSidebar';
-import { DOCS_SIDEBAR_WIDTH_PX, TOPBAR_HEIGHT_PX } from '@const/numbers.const';
 import { buildDocSections } from '@utils/docsSections.utils';
 import { buildPortalDemoExampleMarkup } from '@utils/docsExampleMarkup.utils';
 import {
@@ -32,108 +31,37 @@ import { DocShortcutsTable } from '@components/DocShortcutsTable';
 import { FrameworkTabs } from '@components/FrameworkTabs';
 import { formatCssPropertySlug } from '@utils/docLabel.utils';
 import { buildPropertyShortcutRows } from '@utils/propertyDocShortcuts.utils';
-import {
-  AlignContentPage,
-  AlignItemsPage,
-  AlignSelfPage,
-  CatalogPropertyPage,
-  FlexBasisPage,
-  FlexDirectionPage,
-  FlexGrowPage,
-  FlexPage,
-  FlexShrinkPage,
-  FlexWrapPage,
-  GapPage,
-  GridAutoColumnsPage,
-  GridAutoFlowPage,
-  GridAutoRowsPage,
-  GridColumnPage,
-  GridRowPage,
-  GridTemplateColumnsPage,
-  GridTemplateRowsPage,
-  HeightPage,
-  JustifyContentPage,
-  JustifyItemsPage,
-  JustifySelfPage,
-  MaxHeightPage,
-  MaxWidthPage,
-  MinHeightPage,
-  MinWidthPage,
-  OrderPage,
-  PlaceContentPage,
-  PlaceItemsPage,
-  PlaceSelfPage,
-  ReferenceHubPage,
-  SizePage,
-  WidthPage,
-} from '../Reference';
+import { CatalogPropertyPage } from '../Reference';
 import { catalogHasSlug } from '@data/referenceCatalog';
 import { RecipePage, RecipesHubPage } from '../Recipes';
 import { getRecipe } from '@const/recipes.const';
 import type { DocsSitePage } from '@i18n/types';
 import { DocsAeroCraftPalette } from '@components/DocsAeroCraftPalette';
-
-const REFERENCE_ROUTES: Record<string, () => JSX.Element> = {
-  reference: () => <ReferenceHubPage />,
-  'reference/flex': () => <FlexPage />,
-  'reference/flex-direction': () => <FlexDirectionPage />,
-  'reference/flex-wrap': () => <FlexWrapPage />,
-  'reference/flex-basis': () => <FlexBasisPage />,
-  'reference/flex-grow': () => <FlexGrowPage />,
-  'reference/flex-shrink': () => <FlexShrinkPage />,
-  'reference/order': () => <OrderPage />,
-  'reference/justify-content': () => <JustifyContentPage />,
-  'reference/align-items': () => <AlignItemsPage />,
-  'reference/align-self': () => <AlignSelfPage />,
-  'reference/align-content': () => <AlignContentPage />,
-  'reference/gap': () => <GapPage />,
-  'reference/grid-template-columns': () => <GridTemplateColumnsPage />,
-  'reference/grid-column': () => <GridColumnPage />,
-  'reference/grid-template-rows': () => <GridTemplateRowsPage />,
-  'reference/grid-row': () => <GridRowPage />,
-  'reference/grid-auto-flow': () => <GridAutoFlowPage />,
-  'reference/grid-auto-columns': () => <GridAutoColumnsPage />,
-  'reference/grid-auto-rows': () => <GridAutoRowsPage />,
-  'reference/justify-items': () => <JustifyItemsPage />,
-  'reference/justify-self': () => <JustifySelfPage />,
-  'reference/place-content': () => <PlaceContentPage />,
-  'reference/place-items': () => <PlaceItemsPage />,
-  'reference/place-self': () => <PlaceSelfPage />,
-  'reference/width': () => <WidthPage />,
-  'reference/min-width': () => <MinWidthPage />,
-  'reference/max-width': () => <MaxWidthPage />,
-  'reference/height': () => <HeightPage />,
-  'reference/min-height': () => <MinHeightPage />,
-  'reference/max-height': () => <MaxHeightPage />,
-  'reference/size': () => <SizePage />,
-};
-
-const GROUP_ICON: Record<string, React.ReactNode> = {
-  flex: <BearIcons.GridViewIcon size="xs" />,
-  grid: <BearIcons.GridIcon size="xs" />,
-  position: <BearIcons.MapPinIcon size="xs" />,
-  size: <BearIcons.MaximizeIcon size="xs" />,
-  spacing: <BearIcons.BoxIcon size="xs" />,
-  gap: <BearIcons.HoneycombIcon size="xs" />,
-  text: <BearIcons.TextFieldsIcon size="xs" />,
-  display: <BearIcons.LayersIcon size="xs" />,
-  overflow: <BearIcons.UnfoldMoreIcon size="xs" />,
-  cursor: <BearIcons.MouseIcon size="xs" />,
-  transition: <BearIcons.ZapIcon size="xs" />,
-  interactive: <BearIcons.DragHandleIcon size="xs" />,
-};
-
-function isGroupSlug(s: string | undefined): s is typeof GROUP_ORDER[number] {
-  return !!s && (GROUP_ORDER as readonly string[]).includes(s);
-}
+import { DOCS_CLASS_PREFIX, DOCS_CLASS_SEPARATOR, parseDocsPathParam } from '@const/docsPath.const';
+import {
+  DOCS_DRAWER_NAV,
+  DOCS_H2_ROW,
+  DOCS_INDEX_CARD,
+  DOCS_INDEX_GRID,
+  DOCS_LEAD_720,
+  DOCS_LEAD_900,
+  DOCS_NOT_FOUND,
+  DOCS_NOT_FOUND_ICON,
+  DOCS_PAGE_ASIDE,
+  DOCS_PAGE_MAIN,
+  DOCS_PAGE_MAIN_INNER,
+  DOCS_PAGE_MAIN_OPEN,
+  DOCS_PAGE_SHELL,
+  DOCS_SECTION_ANCHOR,
+} from '@const/docsPageLayout.const';
+import { GROUP_ICON, REFERENCE_ROUTES, isGroupSlug } from './docsReference.registry';
+import { DocsResponsiveBreakpointsTable } from '@components/DocsResponsiveBreakpointsTable';
+import { DocsTaxonomyTable } from '@components/DocsTaxonomyTable';
 
 export function DocsPage() {
   const { t } = useI18n();
   const params = useParams<Record<string, string>>();
-  const raw = params['*'] ?? '';
-  const docPath = raw.replace(/^\/+|\/+$/g, '') || undefined;
-  const prefix = '';
-  const separator = '-';
+  const docPath = parseDocsPathParam(params['*']);
   const [docsNavOpen, setDocsNavOpen] = useState(false);
 
   const breakpoints = useMemo(() => resolveConfig({}).breakpoints, []);
@@ -143,8 +71,6 @@ export function DocsPage() {
   );
 
   const activePath = docPath === undefined ? 'index' : docPath;
-
-  const scrollAnchorOffset = TOPBAR_HEIGHT_PX + 120;
 
   const subsectionList = useMemo(() => {
     if (!docPath || docPath.includes('/')) return [];
@@ -156,42 +82,10 @@ export function DocsPage() {
     <Flex direction="column" gap={3}>
       <Typography variant="h4" weight="bold">{t.docs.responsiveTitle}</Typography>
       <Typography variant="body2" color="muted">{t.docs.responsiveBody}</Typography>
-      <div style={{ overflowX: 'auto', borderRadius: 8, border: '1px solid var(--bear-border-default)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead>
-            <tr style={{ backgroundColor: 'var(--bear-bg-tertiary)' }}>
-              <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                <Typography variant="caption" weight="semibold">{t.docs.bpName}</Typography>
-              </th>
-              <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                <Typography variant="caption" weight="semibold">{t.docs.bpMin}</Typography>
-              </th>
-              <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                <Typography variant="caption" weight="semibold">{t.docs.bpExample}</Typography>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {(Object.entries(breakpoints) as [string, string][]).map(([name, min]) => (
-              <tr key={name} style={{ borderTop: '1px solid var(--bear-border-subtle)' }}>
-                <td style={{ padding: '8px 12px' }}>
-                  <Typography variant="body2" style={{ fontFamily: 'monospace' }}>{name}</Typography>
-                </td>
-                <td style={{ padding: '8px 12px' }}>
-                  <Typography variant="body2">{min}</Typography>
-                </td>
-                <td style={{ padding: '8px 12px' }}>
-                  <Typography variant="body2" style={{ fontFamily: 'monospace', fontSize: 12 }}>
-                    {name}
-                    :
-                    {buildClassName(prefix, separator, 'flex-row')}
-                  </Typography>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DocsResponsiveBreakpointsTable
+        breakpoints={breakpoints}
+        labels={{ name: t.docs.bpName, min: t.docs.bpMin, example: t.docs.bpExample }}
+      />
       <Typography variant="caption" color="muted">{t.docs.responsiveNote}</Typography>
     </Flex>
   );
@@ -207,33 +101,12 @@ export function DocsPage() {
   const renderTaxonomy = () => (
     <Flex direction="column" gap={3}>
       <Typography variant="h4" weight="bold">{t.docs.taxonomyTitle}</Typography>
-      <Typography variant="body2" color="muted" style={{ maxWidth: 720 }}>{t.docs.taxonomyLead}</Typography>
-      <div style={{ overflowX: 'auto', borderRadius: 8, border: '1px solid var(--bear-border-default)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead>
-            <tr style={{ backgroundColor: 'var(--bear-bg-tertiary)' }}>
-              <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                <Typography variant="caption" weight="semibold">{t.docs.taxonomyColumnArea}</Typography>
-              </th>
-              <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                <Typography variant="caption" weight="semibold">{t.docs.taxonomyColumnNote}</Typography>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {t.docs.taxonomy.map((row) => (
-              <tr key={row.area} style={{ borderTop: '1px solid var(--bear-border-subtle)' }}>
-                <td style={{ padding: '8px 12px', verticalAlign: 'top' }}>
-                  <Typography variant="body2">{row.area}</Typography>
-                </td>
-                <td style={{ padding: '8px 12px' }}>
-                  <Typography variant="body2" color="muted">{row.note}</Typography>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Typography variant="body2" color="muted" className={DOCS_LEAD_720}>{t.docs.taxonomyLead}</Typography>
+      <DocsTaxonomyTable
+        rows={t.docs.taxonomy}
+        columnArea={t.docs.taxonomyColumnArea}
+        columnNote={t.docs.taxonomyColumnNote}
+      />
     </Flex>
   );
 
@@ -243,11 +116,11 @@ export function DocsPage() {
       <Flex direction="column" gap={4}>
         <Flex direction="column" gap={2}>
           <Typography variant="h2" weight="bold">{content.title}</Typography>
-          <Typography variant="body1" color="muted" style={{ maxWidth: 720 }}>{content.lead}</Typography>
+          <Typography variant="body1" color="muted" className={DOCS_LEAD_720}>{content.lead}</Typography>
         </Flex>
         <CodeBlock code={content.code} language="markdown" showLineNumbers={false} copyable />
         {content.paragraphs.map((p, i) => (
-          <Typography key={i} variant="body2" color="muted" style={{ maxWidth: 720 }}>{p}</Typography>
+          <Typography key={i} variant="body2" color="muted" className={DOCS_LEAD_720}>{p}</Typography>
         ))}
         <DocShortcutsTable
           title={t.docsProperty.shortcutsCaption}
@@ -266,12 +139,12 @@ export function DocsPage() {
     <Flex direction="column" gap={5}>
       <Flex direction="column" gap={2}>
         <Typography variant="h2" weight="bold">{page.title}</Typography>
-        <Typography variant="body1" color="muted" style={{ maxWidth: 900 }}>{page.lead}</Typography>
+        <Typography variant="body1" color="muted" className={DOCS_LEAD_900}>{page.lead}</Typography>
       </Flex>
       {page.sections.map((s, i) => (
         <Flex key={`sec-${i}`} direction="column" gap={2}>
           <Typography variant="h4" weight="semibold">{s.title}</Typography>
-          <Typography variant="body2" color="muted" style={{ maxWidth: 900 }}>{s.body}</Typography>
+          <Typography variant="body2" color="muted" className={DOCS_LEAD_900}>{s.body}</Typography>
         </Flex>
       ))}
       {page.codeBlocks?.map((cb, i) => (
@@ -300,7 +173,7 @@ export function DocsPage() {
     return (
       <Flex direction="column" gap={4}>
         <Typography variant="h2" weight="bold">{title}</Typography>
-        <Typography variant="body1" color="muted" style={{ maxWidth: 900 }}>{t.docsProperty.lead}</Typography>
+        <Typography variant="body1" color="muted" className={DOCS_LEAD_900}>{t.docsProperty.lead}</Typography>
         <DocShortcutsTable
           title={t.docsProperty.shortcutsCaption}
           exampleLabel={t.docsProperty.exampleCol}
@@ -311,7 +184,7 @@ export function DocsPage() {
     );
   };
 
-  const renderGroupDoc = (group: typeof GROUP_ORDER[number]) => {
+  const renderGroupDoc = (group: (typeof GROUP_ORDER)[number]) => {
     const sections = buildDocSections(group);
     const example =
       group === 'flex' ? DOC_CODE_FLEX
@@ -321,12 +194,12 @@ export function DocsPage() {
     return (
       <Flex direction="column" gap={6}>
         <Flex direction="column" gap={2}>
-          <Flex direction="row" align="center" gap={3} style={{ flexWrap: 'wrap' }}>
+          <div className={DOCS_H2_ROW}>
             <Typography variant="h2" weight="bold">{t.docs.groups[group as keyof typeof t.docs.groups] ?? GROUP_LABELS[group]}</Typography>
             <Badge variant="primary">v{AEROCRAFT_VERSION}</Badge>
             <Badge variant="secondary">{Object.keys(ALL_SHORTCUTS[group] ?? {}).length} classes</Badge>
-          </Flex>
-          <Typography variant="body1" color="muted" style={{ maxWidth: 720 }}>{t.docs.subtitle}</Typography>
+          </div>
+          <Typography variant="body1" color="muted" className={DOCS_LEAD_720}>{t.docs.subtitle}</Typography>
         </Flex>
 
         <DocGroupReference
@@ -355,14 +228,14 @@ export function DocsPage() {
               id={`ac-section-${sec.id}`}
               direction="column"
               gap={3}
-              style={{ scrollMarginTop: scrollAnchorOffset }}
+              className={DOCS_SECTION_ANCHOR}
             >
               <Typography variant="h4" weight="semibold">{title}</Typography>
               <DocGroup
                 label={title}
                 shortcuts={sec.shortcuts}
-                prefix={prefix}
-                separator={separator}
+                prefix={DOCS_CLASS_PREFIX}
+                separator={DOCS_CLASS_SEPARATOR}
                 columns={t.docs.columns}
                 exampleMarkup={buildPortalDemoExampleMarkup(sec)}
                 exampleTitle={t.docs.exampleMarkup}
@@ -388,35 +261,20 @@ export function DocsPage() {
   const renderIndex = () => (
     <Flex direction="column" gap={8}>
       <Flex direction="column" gap={2}>
-        <Flex direction="row" align="center" gap={3} style={{ flexWrap: 'wrap' }}>
+        <div className={DOCS_H2_ROW}>
           <Typography variant="h2" weight="bold">{t.docs.title}</Typography>
           <Badge variant="primary">v{AEROCRAFT_VERSION}</Badge>
           <Badge variant="secondary">{totalCount} classes</Badge>
-        </Flex>
-        <Typography variant="body1" color="muted" style={{ maxWidth: 720 }}>{t.docs.subtitle}</Typography>
+        </div>
+        <Typography variant="body1" color="muted" className={DOCS_LEAD_720}>{t.docs.subtitle}</Typography>
       </Flex>
 
       {renderTaxonomy()}
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-          gap: 16,
-        }}
-      >
+      <div className={DOCS_INDEX_GRID}>
         {GROUP_ORDER.map((g) => (
           <Link key={g} to={`/docs/${g}`}>
-            <Card
-              padding="lg"
-              radius="lg"
-              style={{
-                cursor: 'pointer',
-                height: '100%',
-                backgroundColor: 'var(--bear-bg-secondary)',
-                border: '1px solid var(--bear-border-default)',
-              }}
-            >
+            <Card padding="lg" radius="lg" className={DOCS_INDEX_CARD}>
               <Flex direction="column" gap={2}>
                 <Flex direction="row" align="center" gap={2}>
                   {GROUP_ICON[g]}
@@ -439,7 +297,7 @@ export function DocsPage() {
     <Flex direction="column" gap={5}>
       <Flex direction="column" gap={2}>
         <Typography variant="h2" weight="bold">{sitePage.title}</Typography>
-        <Typography variant="body1" color="muted" style={{ maxWidth: 900 }}>{sitePage.lead}</Typography>
+        <Typography variant="body1" color="muted" className={DOCS_LEAD_900}>{sitePage.lead}</Typography>
       </Flex>
       <FrameworkTabs />
     </Flex>
@@ -473,8 +331,8 @@ export function DocsPage() {
     if (isGroupSlug(docPath)) return renderGroupDoc(docPath);
     if (isTopicDocPath(docPath)) return renderTopicPropertyPage(docPath);
     return (
-      <Flex direction="column" align="center" gap={4} style={{ padding: '48px 0', textAlign: 'center' }}>
-        <BearIcons.FileTextIcon size="lg" style={{ opacity: 0.35 }} />
+      <Flex direction="column" align="center" gap={4} className={DOCS_NOT_FOUND}>
+        <BearIcons.FileTextIcon size="lg" className={DOCS_NOT_FOUND_ICON} />
         <Typography variant="h4" weight="bold">{t.docs.notFound}</Typography>
         <Link to="/docs">
           <Button variant="primary" size="sm">{t.docs.backToOverview}</Button>
@@ -485,22 +343,8 @@ export function DocsPage() {
 
   return (
     <>
-      <Flex direction="row" align="start" gap={0} style={{ width: '100%', minHeight: 0 }}>
-        <aside
-          className="docs-nav-aside-desktop"
-          style={{
-            width: DOCS_SIDEBAR_WIDTH_PX,
-            flexShrink: 0,
-            position: 'sticky',
-            top: TOPBAR_HEIGHT_PX,
-            alignSelf: 'flex-start',
-            maxHeight: `calc(100vh - ${TOPBAR_HEIGHT_PX}px)`,
-            overflowY: 'auto',
-            borderRight: '1px solid var(--bear-border-default)',
-            padding: '16px 12px',
-            backgroundColor: 'var(--bear-bg-secondary)',
-          }}
-        >
+      <div className={DOCS_PAGE_SHELL}>
+        <aside className={`${DOCS_PAGE_ASIDE} docs-nav-aside-desktop`}>
           <DocsSidebar
             activePath={activePath}
             subsectionList={subsectionList}
@@ -508,8 +352,8 @@ export function DocsPage() {
           />
         </aside>
 
-        <div style={{ flex: 1, minWidth: 0, padding: '8px 16px 32px' }}>
-          <div className="docs-nav-open-mobile" style={{ marginBottom: 12 }}>
+        <div className={DOCS_PAGE_MAIN}>
+          <div className={`${DOCS_PAGE_MAIN_OPEN} docs-nav-open-mobile`}>
             <Button variant="outline" size="sm" onClick={() => setDocsNavOpen(true)}>
               <Flex align="center" gap={2}>
                 <BearIcons.BookOpenIcon size="xs" />
@@ -517,12 +361,12 @@ export function DocsPage() {
               </Flex>
             </Button>
           </div>
-          <main style={{ width: '100%', maxWidth: '100%' }}>{mainContent()}</main>
+          <main className={DOCS_PAGE_MAIN_INNER}>{mainContent()}</main>
         </div>
-      </Flex>
+      </div>
 
       <Drawer isOpen={docsNavOpen} onClose={() => setDocsNavOpen(false)} side="left" size="sm">
-        <div style={{ padding: 16 }}>
+        <div className={DOCS_DRAWER_NAV}>
           <DocsSidebar
             activePath={activePath}
             subsectionList={subsectionList}

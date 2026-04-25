@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
   <defs>
     <linearGradient id="acCrown" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fbcfe8"/>
-      <stop offset="0.6" stop-color="#ec4899"/>
-      <stop offset="1" stop-color="#c026d3"/>
+      <stop offset="0" stop-color="#bfdbfe"/>
+      <stop offset="0.6" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#6366f1"/>
     </linearGradient>
     <linearGradient id="acLit" x1="0" y1="0" x2="0.9" y2="1">
-      <stop offset="0" stop-color="#f472b6"/>
-      <stop offset="0.55" stop-color="#ec4899"/>
-      <stop offset="1" stop-color="#9d174d"/>
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="0.55" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
     </linearGradient>
     <linearGradient id="acShade" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7a1a4a"/>
-      <stop offset="0.6" stop-color="#3d0e26"/>
-      <stop offset="1" stop-color="#140713"/>
+      <stop offset="0" stop-color="#312e81"/>
+      <stop offset="0.6" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0f172a"/>
     </linearGradient>
     <radialGradient id="acShine" cx="0.32" cy="0.18" r="0.4">
       <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
