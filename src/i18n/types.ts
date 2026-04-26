@@ -13,6 +13,7 @@ export interface Messages {
     home: string;
     docs: string;
     components: string;
+    plugin: string;
     playground: string;
     github: string;
     sandbox: string;
@@ -30,8 +31,10 @@ export interface Messages {
     kicker: string;
     title: string;
     lead: string;
-    badgePremium: string;
     ctaDoc: string;
+    pluginTitle: string;
+    pluginBody: string;
+    pluginCta: string;
     galleryTitle: string;
     tableTitle: string;
     colName: string;
@@ -40,6 +43,11 @@ export interface Messages {
     showGeneratedCss: string;
     hideGeneratedCss: string;
     generatedCssTitle: string;
+    modelTitle: string;
+    modelBody: string;
+    modelUseModelTitle: string;
+    modelFunctionTitle: string;
+    modelInputModeTitle: string;
   };
   sidebar: {
     ecosystem: string;

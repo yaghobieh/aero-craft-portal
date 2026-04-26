@@ -18,6 +18,7 @@ export const DOCS_NAV_TREE: DocsNavNode[] = [
   {
     id: 'getting-started',
     children: [
+      { id: 'getting-started/whats-new', path: 'getting-started/whats-new' },
       { id: 'getting-started/frameworks', path: 'getting-started/frameworks' },
       { id: 'getting-started/import-css', path: 'getting-started/import-css' },
       { id: 'getting-started/postcss', path: 'getting-started/postcss' },
@@ -30,6 +31,8 @@ export const DOCS_NAV_TREE: DocsNavNode[] = [
     id: 'core-concepts',
     children: [
       { id: 'core-concepts/dark-mode', path: 'core-concepts/dark-mode' },
+      { id: 'core-concepts/variants', path: 'core-concepts/variants' },
+      { id: 'core-concepts/models', path: 'core-concepts/models' },
       { id: 'core-concepts/theme', path: 'core-concepts/theme' },
       { id: 'core-concepts/component-recipes', path: 'core-concepts/component-recipes' },
       { id: 'core-concepts/responsive', path: 'core-concepts/responsive' },

@@ -1,4 +1,4 @@
-import { Flex, Typography, Button, Badge, Card } from '@forgedevstack/bear';
+import { Flex, Typography, Button, Badge, Card, CodeBlock } from '@forgedevstack/bear';
 import { Link } from '@forgedevstack/forge-compass/react';
 import { useI18n } from '@i18n/index';
 import { LivePreview } from '@components/LivePreview';
@@ -9,16 +9,60 @@ import { ROUTES } from '@const/routes.const';
 import { PORTAL_PAGE, PORTAL_PAGE_LEAD, PORTAL_PREVIEW_SHELL, PORTAL_RECIPE_CARD } from '@const/portalShell.classes';
 import { HERO_PREVIEW_BACKGROUND_HEX } from '@const/strings.const';
 
+const BUILTIN_COMPONENT_SHORTCUTS = [
+  'circle-button',
+  'input-rounded',
+];
+
+const PORTAL_COMPONENT_SHORTCUTS = [
+  'button-core',
+  'button-touch-48',
+  'button-primary-rounded',
+  'button-outline-primary',
+  'button-ghost-surface',
+  'gallery-grid-auto',
+];
+
+const USE_MODEL_EXAMPLE = `import { useModel } from '@forgedevstack/aerocraft/react';
+
+export function CtaButton() {
+  const cls = useModel('button', 'primary', {
+    prefix: '',
+    extra: 'button-touch-48 button-primary-rounded',
+  });
+
+  return <button className={cls}>Continue</button>;
+}`;
+
+const MODEL_FUNCTION_EXAMPLE = `import { model } from '@forgedevstack/aerocraft';
+
+const buttonClass = [
+  model('button', 'primary', ''),
+  'button-touch-48',
+  'button-primary-rounded',
+].join(' ');
+
+const inputClass = model('input', 'rounded', '');
+`;
+
+const MODE_INPUT_EXAMPLE = `import { useModel } from '@forgedevstack/aerocraft/react';
+
+type InputProps = {
+  mode?: 'default' | 'rounded' | 'pill' | 'underline';
+};
+
+export function AppInput({ mode = 'default' }: InputProps) {
+  const cls = useModel('input', mode, { prefix: '' });
+  return <input className={cls} placeholder="Search..." />;
+}`;
+
 export function ComponentsPage() {
   const { t } = useI18n();
   return (
     <Flex direction="column" gap={6} className={PORTAL_PAGE}>
       <Flex direction="column" gap={3}>
         <Badge variant="info">{t.componentsPage.kicker}</Badge>
-        <Flex align="center" gap={2} wrap="wrap">
-          <Typography variant="h1" weight="bold">{t.componentsPage.title}</Typography>
-          <Badge variant="secondary">{t.componentsPage.badgePremium}</Badge>
-        </Flex>
+        <Typography variant="h1" weight="bold">{t.componentsPage.title}</Typography>
         <Typography variant="body1" color="muted" className={PORTAL_PAGE_LEAD}>
           {t.componentsPage.lead}
         </Typography>
@@ -51,6 +95,13 @@ export function ComponentsPage() {
                     background={HERO_PREVIEW_BACKGROUND_HEX}
                   />
                 </div>
+                <CodeBlock
+                  code={r.markup}
+                  language="html"
+                  title={`${r.title} markup`}
+                  showLineNumbers={false}
+                  copyable
+                />
               </Flex>
             </Card>
           );
@@ -64,6 +115,41 @@ export function ComponentsPage() {
           config: t.componentsPage.colConfig,
         }}
       />
+      <Card className={PORTAL_RECIPE_CARD}>
+        <Flex direction="column" gap={3}>
+          <Typography variant="h5" weight="semibold">{t.componentsPage.modelTitle}</Typography>
+          <Typography variant="body2" color="muted">
+            {t.componentsPage.modelBody}
+          </Typography>
+          <Typography variant="body2" color="muted">
+            Base AeroCraft component shortcuts: {BUILTIN_COMPONENT_SHORTCUTS.join(', ')}
+          </Typography>
+          <Typography variant="body2" color="muted">
+            Portal custom shortcuts from config: {PORTAL_COMPONENT_SHORTCUTS.join(', ')}
+          </Typography>
+          <CodeBlock
+            code={USE_MODEL_EXAMPLE}
+            language="typescript"
+            title={t.componentsPage.modelUseModelTitle}
+            showLineNumbers={false}
+            copyable
+          />
+          <CodeBlock
+            code={MODEL_FUNCTION_EXAMPLE}
+            language="typescript"
+            title={t.componentsPage.modelFunctionTitle}
+            showLineNumbers={false}
+            copyable
+          />
+          <CodeBlock
+            code={MODE_INPUT_EXAMPLE}
+            language="typescript"
+            title={t.componentsPage.modelInputModeTitle}
+            showLineNumbers={false}
+            copyable
+          />
+        </Flex>
+      </Card>
     </Flex>
   );
 }

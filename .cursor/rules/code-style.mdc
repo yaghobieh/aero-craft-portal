@@ -8,7 +8,7 @@ alwaysApply: true
 
 ## Component Rules
 - One component per `.tsx` file — no exceptions (exception: small icon registries such as `*.icons.tsx` that only export constants).
-- Avoid React `style={{}}` on Bear primitives and layout; prefer classes in `src/styles/index.css` with the `ac-` prefix. Narrow exceptions: dynamic iframe `minHeight` / `opacity`, and tooltip coordinates tied to pointer position.
+- Avoid React `style={{}}` on Bear primitives and layout; prefer classes in `src/styles/portal-surfaces.css` with the `ac-` prefix or AeroCraft-generated `portal-*` shortcuts. Narrow exceptions: dynamic iframe `minHeight` / `opacity`, and tooltip coordinates tied to pointer position.
 - No magic numbers in TS/TSX — use `@const/numbers.const.ts` (or feature-specific const files when justified).
 - No raw string literals for repeated symbols — use `@const/strings.const.ts` (`EMPTY_STRING`, shared hex labels, aria strings, etc.). User-visible copy belongs in `@i18n/*`, not hardcoded in components.
 - No hardcoded UI sentences — all user-facing text through `useI18n()` / `Messages`.

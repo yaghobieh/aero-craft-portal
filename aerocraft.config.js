@@ -169,6 +169,91 @@ export default defineConfig({
       group: 'layout',
       css: { width: '100%' },
     },
+    'portal-vs-table': {
+      group: 'layout',
+      css: {
+        'border-radius': '18px',
+        border: '1px solid var(--bear-border-default)',
+        background: 'var(--bear-bg-secondary)',
+        overflow: 'hidden',
+      },
+    },
+    'portal-vs-header': {
+      group: 'layout',
+      css: {
+        display: 'grid',
+        'grid-template-columns': '2fr 1fr 1fr',
+        padding: '14px 20px',
+        'font-size': '11px',
+        'font-weight': '700',
+        'letter-spacing': '0.1em',
+        'text-transform': 'uppercase',
+        color: 'var(--bear-text-muted)',
+        background: 'rgba(255,255,255,0.02)',
+        'border-bottom': '1px solid var(--bear-border-default)',
+      },
+    },
+    'portal-vs-header-ac': {
+      group: 'color',
+      css: { color: 'var(--bear-primary-400)' },
+    },
+    'portal-vs-row': {
+      group: 'layout',
+      css: {
+        display: 'grid',
+        'grid-template-columns': '2fr 1fr 1fr',
+        'align-items': 'center',
+      },
+    },
+    'portal-vs-row-divider': {
+      group: 'layout',
+      css: { 'border-top': '1px solid var(--bear-border-default)' },
+    },
+    'portal-vs-cell': {
+      group: 'layout',
+      css: { padding: '12px 20px' },
+    },
+    'portal-vs-cell-divider': {
+      group: 'layout',
+      css: { 'border-left': '1px solid var(--bear-border-default)' },
+    },
+    'portal-vs-cell-advantage': {
+      group: 'layout',
+      css: { background: 'linear-gradient(100deg, rgba(59,130,246,0.10), rgba(99,102,241,0.08))' },
+    },
+    'portal-vs-code': {
+      group: 'font',
+      css: {
+        'font-family': 'Fira Code, ui-monospace, monospace',
+        'font-size': '12px',
+      },
+    },
+    'portal-vs-code-ac': {
+      group: 'font',
+      css: {
+        'font-family': 'Fira Code, ui-monospace, monospace',
+        'font-size': '12px',
+        color: 'var(--bear-text-secondary)',
+        'font-weight': '400',
+      },
+    },
+    'portal-vs-code-ac-adv': {
+      group: 'font',
+      css: {
+        'font-family': 'Fira Code, ui-monospace, monospace',
+        'font-size': '12px',
+        color: 'var(--bear-primary-400)',
+        'font-weight': '600',
+      },
+    },
+    'portal-vs-code-other': {
+      group: 'font',
+      css: {
+        'font-family': 'Fira Code, ui-monospace, monospace',
+        'font-size': '12px',
+        color: 'var(--bear-text-muted)',
+      },
+    },
   },
 });
 

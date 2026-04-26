@@ -98,6 +98,15 @@ export function TopNavbar({ onOpenSearch }: TopNavbarProps) {
 
   const iconGroup = (
     <>
+      <Button
+        variant="ghost"
+        size="sm"
+        className={PORTAL_ICON_BTN}
+        aria-label={t.hero.ctaStudio}
+        onClick={() => window.open(ROUTES.STUDIO, '_self')}
+      >
+        ST
+      </Button>
       {iconBtn(
         <BearIcons.PackageIcon size="sm" className={PORTAL_BEAR_FG} />,
         () => window.open(AEROCRAFT_NPM_URL, '_blank'),

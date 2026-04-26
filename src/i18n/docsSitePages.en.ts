@@ -931,4 +931,201 @@ export default defineConfig({
       { example: 'hover:opacity-80', note: 'When hover variant is enabled' },
     ],
   },
+
+  /* ── v1.0.3 pages ─────────────────────────────────────────────── */
+
+  'getting-started/whats-new': {
+    title: "What's new in AeroCraft 1.0.3",
+    lead: 'Native variant generation, component models, 25+ recipes, and the removal of all companion plugins. One plugin does everything — just like you expect.',
+    sections: [
+      {
+        title: 'Native variant generation',
+        body: 'dark:, hover:, focus:, active:, disabled:, group-hover:, placeholder:, focus-visible:, focus-within:, first:, last:, odd:, even: — all generated natively by the AeroCraft PostCSS plugin. No companion plugin needed. Compound variants like dark:hover: and sm:dark:focus: work out of the box.',
+      },
+      {
+        title: 'Content scanning',
+        body: 'AeroCraft reads your source files (via the content config) and generates only the variant CSS you actually use. Zero waste. Set content: ["./src/**/*.{ts,tsx}"] and AeroCraft handles the rest.',
+      },
+      {
+        title: '25+ component recipes',
+        body: 'Production-ready single-class components: btn, btn-primary, btn-outline, btn-ghost, btn-sm, btn-lg, btn-icon, circle-button, input, input-rounded, input-pill, input-underline, textarea, select, card, card-hover, card-flat, badge, avatar, avatar-sm, avatar-lg, container, divider, skeleton, prose, overlay, focus-ring, transition.',
+      },
+      {
+        title: 'Component models API',
+        body: 'A runtime registry that maps component type + model name to CSS class. No CSS generated — pure JS lookup. Use model("input", "rounded") to get "bear-input-rounded", or the React hook useModel("button", "primary"). Works with any framework.',
+      },
+      {
+        title: 'darkSelector config',
+        body: 'Customize which CSS selector triggers dark mode. Default: ".dark, .bear-dark". Pass darkSelector in your PostCSS config or aerocraft.config.js.',
+      },
+      {
+        title: 'postcss-bear-variants removed',
+        body: 'The separate companion plugin is no longer needed. Delete postcss-bear-variants.cjs — AeroCraft handles everything in a single plugin, exactly like Tailwind.',
+      },
+    ],
+    codeBlocks: [
+      { title: 'postcss.config.js (before)', code: `import { aerocraftPlugin } from '@forgedevstack/aerocraft/postcss';
+import bearVariants from './postcss-bear-variants.cjs';
+import config from './aerocraft.config.js';
+
+export default {
+  plugins: [
+    aerocraftPlugin(config),
+    bearVariants({ content: config.content }),  // extra plugin
+  ],
+};`, language: 'typescript' },
+      { title: 'postcss.config.js (after — v1.0.3)', code: `import { aerocraftPlugin } from '@forgedevstack/aerocraft/postcss';
+import config from './aerocraft.config.js';
+
+export default {
+  plugins: [aerocraftPlugin(config)],  // that's it
+};`, language: 'typescript' },
+    ],
+    shortcuts: [
+      { example: 'dark:bear-bg-zinc-900', note: 'Built-in dark variant' },
+      { example: 'hover:bear-bg-primary-600', note: 'Built-in hover variant' },
+      { example: 'dark:hover:bear-text-white', note: 'Compound variant' },
+      { example: 'bear-btn-primary', note: 'Component recipe' },
+      { example: 'bear-input-pill', note: 'Input recipe' },
+      { example: 'bear-card-hover', note: 'Card recipe' },
+    ],
+  },
+
+  'core-concepts/variants': {
+    title: 'Variants (dark, hover, focus)',
+    lead: 'AeroCraft generates state variants natively — no extra plugin needed. Just use variant prefixes in your class names and set content in your config.',
+    sections: [
+      {
+        title: 'How it works',
+        body: 'When you set content: ["./src/**/*.{ts,tsx}"] in your config, AeroCraft scans those files for variant class patterns like dark:bear-bg-zinc-900 or hover:bear-text-primary-500. It then generates only the CSS rules you actually use.',
+      },
+      {
+        title: 'Available variants',
+        body: 'dark: — dark mode (wraps in .dark or custom selector). hover: — :hover pseudo-class. focus: — :focus. focus-visible: — :focus-visible. focus-within: — :focus-within. active: — :active. disabled: — :disabled. group-hover: — parent .bear-group:hover. placeholder: — ::placeholder. first: — :first-child. last: — :last-child. odd: — :nth-child(odd). even: — :nth-child(even).',
+      },
+      {
+        title: 'Compound variants',
+        body: 'Stack multiple variants: dark:hover:bear-bg-zinc-700 generates .dark .dark\\:hover\\:bear-bg-zinc-700:hover. Responsive compounds like sm:dark:bear-text-white are also supported.',
+      },
+      {
+        title: 'Custom dark selector',
+        body: 'By default, dark: wraps rules in .dark and .bear-dark selectors. Override with darkSelector in your PostCSS config: aerocraftPlugin({ ...config, darkSelector: ".my-dark-class" }).',
+      },
+      {
+        title: 'Opacity modifiers',
+        body: 'Opacity works with variants: dark:bear-bg-primary-900/30 generates color-mix(in srgb, var(--bear-primary-900) 30%, transparent). Works with hex colors too: hover:bear-bg-black/60 generates rgba(0, 0, 0, 0.6).',
+      },
+      {
+        title: '!important modifier',
+        body: 'Prefix or suffix with ! for important: !bear-flex or bear-flex! both generate .bear-flex { display: flex !important; }. Works with variants: dark:!bear-bg-white.',
+      },
+    ],
+    codeBlocks: [
+      { title: 'Usage in JSX', code: `<div className="bear-bg-white dark:bear-bg-zinc-900 bear-text-zinc-900 dark:bear-text-zinc-100">
+  Automatically adapts to dark mode
+</div>
+
+<button className="bear-btn-primary hover:bear-bg-primary-600 focus:bear-ring-primary-500/50">
+  Interactive button
+</button>
+
+<input className="bear-input focus:bear-border-primary-500 disabled:bear-opacity-50" />`, language: 'html' },
+      { title: 'aerocraft.config.js', code: `export default {
+  prefix: 'bear',
+  separator: '-',
+  mode: 'standalone',
+  groups: 'all',
+  content: ['./src/**/*.{ts,tsx}'],  // required for variant scanning
+};`, language: 'typescript' },
+    ],
+    shortcuts: [
+      { example: 'dark:bear-bg-zinc-900', note: 'Dark mode background' },
+      { example: 'hover:bear-text-primary-500', note: 'Hover text color' },
+      { example: 'focus:bear-ring-primary-500/50', note: 'Focus ring with opacity' },
+      { example: 'dark:hover:bear-bg-zinc-700', note: 'Compound: dark + hover' },
+      { example: 'disabled:bear-opacity-50', note: 'Disabled state' },
+      { example: '!bear-flex', note: 'Important modifier' },
+    ],
+  },
+
+  'core-concepts/models': {
+    title: 'Models (component API)',
+    lead: 'A runtime registry that maps component + model name to CSS class. No CSS generated — pure JS lookup. Works with React, Angular, Vue, or vanilla JS.',
+    sections: [
+      {
+        title: 'The model() function',
+        body: 'Import model from @forgedevstack/aerocraft. Call model("input", "rounded") and it returns "bear-input-rounded". Call model("button", "primary") and get "bear-btn-primary". The second argument defaults to "default" if omitted.',
+      },
+      {
+        title: 'React — useModel() hook',
+        body: 'Import useModel from @forgedevstack/aerocraft/react. It memoizes the lookup: const cls = useModel("input", model). Use it in your component props.',
+      },
+      {
+        title: 'Any framework — className approach',
+        body: 'The class-based approach works everywhere. In React: className="bear-input-rounded". In Angular: class="bear-input-rounded". In Vue: :class="\'bear-input-rounded\'". In HTML: class="bear-input-rounded". The model() function is just a convenience wrapper.',
+      },
+      {
+        title: 'Custom models — registerModels()',
+        body: 'Extend the registry with your own models: registerModels({ alert: { success: { className: "alert-success" } } }). Then model("alert", "success") returns "bear-alert-success".',
+      },
+      {
+        title: 'Available models',
+        body: 'button: default, primary, outline, ghost, icon, circle, sm, lg. input: default, rounded, pill, underline. textarea: default. select: default. card: default, hover, flat. badge: default. avatar: default, sm, lg. container: default. divider: default. skeleton: default. overlay: default.',
+      },
+    ],
+    codeBlocks: [
+      { title: 'Core — model() function', code: `import { model } from '@forgedevstack/aerocraft';
+
+model('input', 'rounded')   // → 'bear-input-rounded'
+model('button', 'primary')  // → 'bear-btn-primary'
+model('card')               // → 'bear-card'
+model('card', 'hover')      // → 'bear-card-hover'
+model('avatar', 'lg')       // → 'bear-avatar-lg'`, language: 'typescript' },
+      { title: 'React — useModel() hook', code: `import { useModel } from '@forgedevstack/aerocraft/react';
+
+function MyInput({ model = 'default', className, ...props }) {
+  const cls = useModel('input', model);
+  return <input className={\`\${cls} \${className ?? ''}\`} {...props} />;
+}
+
+// Usage:
+<MyInput model="rounded" placeholder="Search..." />
+// renders: <input class="bear-input-rounded" />
+
+<MyInput model="pill" />
+// renders: <input class="bear-input-pill" />`, language: 'tsx' },
+      { title: 'Any framework — just use classes', code: `<!-- React -->
+<input className="bear-input-rounded" />
+
+<!-- Angular -->
+<input class="bear-input-rounded" />
+
+<!-- Vue -->
+<input :class="'bear-input-rounded'" />
+
+<!-- HTML -->
+<input class="bear-input-rounded" />
+<button class="bear-btn-primary">Click</button>
+<div class="bear-card">Content</div>`, language: 'html' },
+      { title: 'Register custom models', code: `import { registerModels, model } from '@forgedevstack/aerocraft';
+
+registerModels({
+  alert: {
+    success: { className: 'alert-success' },
+    error:   { className: 'alert-error' },
+    warning: { className: 'alert-warning' },
+  },
+});
+
+model('alert', 'success')  // → 'bear-alert-success'`, language: 'typescript' },
+    ],
+    shortcuts: [
+      { example: 'bear-btn-primary', note: 'model("button", "primary")' },
+      { example: 'bear-input-rounded', note: 'model("input", "rounded")' },
+      { example: 'bear-input-pill', note: 'model("input", "pill")' },
+      { example: 'bear-card-hover', note: 'model("card", "hover")' },
+      { example: 'bear-avatar-lg', note: 'model("avatar", "lg")' },
+      { example: 'bear-container', note: 'model("container")' },
+    ],
+  },
 };
