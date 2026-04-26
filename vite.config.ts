@@ -43,10 +43,8 @@ export default defineConfig({
     alias: [
       { find: 'vue', replacement: path.resolve(__dirname, 'src/vue.ts') },
       { find: '@config', replacement: path.resolve(__dirname, 'src/config') },
-      {
-        find: /^@forgedevstack\/aerocraft$/,
-        replacement: path.resolve(__dirname, 'src/shims/aerocraft-browser.ts'),
-      },
+      { find: 'node:fs', replacement: path.resolve(__dirname, 'src/shims/fs-browser.ts') },
+      { find: 'glob', replacement: path.resolve(__dirname, 'src/shims/glob-browser.ts') },
     ],
   },
 });

@@ -1,4 +1,5 @@
 import { ALL_SHORTCUTS } from '@forgedevstack/aerocraft';
+import type { AeroCraftShortcutEntry } from '@forgedevstack/aerocraft';
 import type { ShortcutRow } from '../components/UtilityReference/UtilityReference.types';
 
 type CssMatcher = (cssProp: string) => boolean;
@@ -58,16 +59,16 @@ export function getAutoShortcutsForProperty(slug: string): ShortcutRow[] {
   const seen = new Set<string>();
 
   for (const group of Object.values(ALL_SHORTCUTS)) {
-    for (const short of Object.values(group)) {
-      if (seen.has(short.name)) continue;
+    for (const [shortcutName, short] of Object.entries(group) as [string, AeroCraftShortcutEntry][]) {
+      if (seen.has(shortcutName)) continue;
       const cssProps = Object.keys(short.css);
       if (cssProps.some(match)) {
         rows.push({
-          name: short.name,
+          name: shortcutName,
           styles: cssRecordToString(short.css),
-          description: short.description,
+          description: short.description ?? '',
         });
-        seen.add(short.name);
+        seen.add(shortcutName);
       }
     }
   }

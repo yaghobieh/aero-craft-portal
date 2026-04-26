@@ -59,6 +59,7 @@ import { DocsResponsiveBreakpointsTable } from '@components/DocsResponsiveBreakp
 import { DocsTaxonomyTable } from '@components/DocsTaxonomyTable';
 
 export function DocsPage() {
+  type GroupName = (typeof GROUP_ORDER)[number];
   const { t } = useI18n();
   const params = useParams<Record<string, string>>();
   const docPath = parseDocsPathParam(params['*']);
@@ -66,7 +67,7 @@ export function DocsPage() {
 
   const breakpoints = useMemo(() => resolveConfig({}).breakpoints, []);
   const totalCount = useMemo(
-    () => GROUP_ORDER.reduce((acc, g) => acc + Object.keys(ALL_SHORTCUTS[g] ?? {}).length, 0),
+    () => GROUP_ORDER.reduce((acc: number, g: GroupName) => acc + Object.keys(ALL_SHORTCUTS[g] ?? {}).length, 0),
     [],
   );
 
@@ -272,7 +273,7 @@ export function DocsPage() {
       {renderTaxonomy()}
 
       <div className={DOCS_INDEX_GRID}>
-        {GROUP_ORDER.map((g) => (
+        {GROUP_ORDER.map((g: GroupName) => (
           <Link key={g} to={`/docs/${g}`}>
             <Card padding="lg" radius="lg" className={DOCS_INDEX_CARD}>
               <Flex direction="column" gap={2}>
