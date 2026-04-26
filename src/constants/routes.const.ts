@@ -14,4 +14,4 @@ export const AEROCRAFT_NPM_URL = 'https://www.npmjs.com/package/@forgedevstack/a
 export const AEROCRAFT_GITHUB_URL = 'https://github.com/yaghobieh/aero-craft';
 export const AEROCRAFT_PORTAL_URL = 'https://aerocraftjs.com';
 export const FORGESTACK_URL = 'https://forgedevstack.com';
-export const AEROCRAFT_VERSION = '1.0.3';
+export const AEROCRAFT_VERSION = '1.0.4';

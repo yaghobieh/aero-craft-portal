@@ -1,6 +1,6 @@
 {
   "name": "aerocraft-portal",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,7 +13,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@forgedevstack/aerocraft": "file:../aerocraft",
+    "@forgedevstack/aerocraft": "^1.0.4",
     "@forgedevstack/anvil": "^1.0.6",
     "@forgedevstack/bear": "^1.2.2",
     "@forgedevstack/forge-compass": "^1.0.2",
