@@ -932,62 +932,103 @@ export default defineConfig({
     ],
   },
 
-  /* ── v1.0.3 pages ─────────────────────────────────────────────── */
+  /* ── v1.0.5 pages ─────────────────────────────────────────────── */
 
   'getting-started/whats-new': {
-    title: "What's new in AeroCraft 1.0.3",
-    lead: 'Native variant generation, component models, 25+ recipes, and the removal of all companion plugins. One plugin does everything — just like you expect.',
+    title: "What's new in AeroCraft 1.0.5",
+    lead: 'Container queries, plugin system, 50+ new variants, first-class ring and divide utilities, env() support, and feature-detection variants. The biggest feature release yet.',
     sections: [
       {
-        title: 'Native variant generation',
-        body: 'dark:, hover:, focus:, active:, disabled:, group-hover:, placeholder:, focus-visible:, focus-within:, first:, last:, odd:, even: — all generated natively by the AeroCraft PostCSS plugin. No companion plugin needed. Compound variants like dark:hover: and sm:dark:focus: work out of the box.',
+        title: 'Container query variant',
+        body: 'Use @container: to wrap utilities in CSS container queries. Supports named containers via @container/sidebar:. Pair with container-type-[inline-size] on parent elements for responsive component-level design.',
       },
       {
-        title: 'Content scanning',
-        body: 'AeroCraft reads your source files (via the content config) and generates only the variant CSS you actually use. Zero waste. Set content: ["./src/**/*.{ts,tsx}"] and AeroCraft handles the rest.',
+        title: 'Plugin system',
+        body: 'A Tailwind-like plugin API lets third-party plugins register custom utilities and components. Add plugins to your config and they receive { addUtilities, addComponents, theme, config } — exactly like Tailwind plugins, but for AeroCraft.',
       },
       {
-        title: '25+ component recipes',
-        body: 'Production-ready single-class components: btn, btn-primary, btn-outline, btn-ghost, btn-sm, btn-lg, btn-icon, circle-button, input, input-rounded, input-pill, input-underline, textarea, select, card, card-hover, card-flat, badge, avatar, avatar-sm, avatar-lg, container, divider, skeleton, prose, overlay, focus-ring, transition.',
+        title: 'print: variant',
+        body: 'The print: variant wraps rules in @media print. Use print:bear-hidden to hide elements when printing, or print:bear-text-black to force black text on paper.',
       },
       {
-        title: 'Component models API',
-        body: 'A runtime registry that maps component type + model name to CSS class. No CSS generated — pure JS lookup. Use model("input", "rounded") to get "bear-input-rounded", or the React hook useModel("button", "primary"). Works with any framework.',
+        title: 'aria-* / data-* variants',
+        body: 'Dynamic attribute-based variants. aria-selected:bear-bg-blue-500 targets [aria-selected="true"]. data-active:bear-text-white targets [data-active]. Any aria or data attribute name works — no predefined list needed.',
       },
       {
-        title: 'darkSelector config',
-        body: 'Customize which CSS selector triggers dark mode. Default: ".dark, .bear-dark". Pass darkSelector in your PostCSS config or aerocraft.config.js.',
+        title: 'Full peer: / group: variant set',
+        body: 'Beyond group-hover, AeroCraft now supports: group-focus, group-active, group-focus-within, group-focus-visible, group-disabled, group-checked, group-invalid, peer-hover, peer-focus, peer-focus-visible, peer-active, peer-checked, peer-disabled, peer-invalid, peer-required, peer-placeholder-shown.',
       },
       {
-        title: 'postcss-bear-variants removed',
-        body: 'The separate companion plugin is no longer needed. Delete postcss-bear-variants.cjs — AeroCraft handles everything in a single plugin, exactly like Tailwind.',
+        title: 'Ring utilities (first-class)',
+        body: 'ring-0 through ring-8, ring-inset, ring-offset-0 through ring-offset-8, and ring color utilities (ring-blue-500, ring-gray-400, etc.) — all powered by the --ac-ring-color CSS custom property. No more arbitrary-only ring widths.',
+      },
+      {
+        title: 'Divide utilities',
+        body: 'divide-x and divide-y with width scale (0, 1, 2, 4, 8), divide-solid/dashed/dotted/double/none, and divide color utilities. Uses the > * + * nested selector for proper child-element dividers.',
+      },
+      {
+        title: 'Content utility & env()',
+        body: 'content-none and content-empty as static shortcuts. Arbitrary content-[\'…\'] via bracket notation. Plus env() support: p-(env-safe-area-inset-top) resolves to padding: env(safe-area-inset-top) — essential for mobile PWAs with notched displays.',
+      },
+      {
+        title: 'Motion & feature-detection variants',
+        body: 'motion-reduce: and motion-safe: for prefers-reduced-motion. supports-grid:, supports-flex:, supports-[display:grid]: for @supports queries. contrast-more: and contrast-less: for prefers-contrast. portrait: and landscape: for orientation.',
+      },
+      {
+        title: 'Additional pseudo variants',
+        body: 'visited, checked, required, invalid, valid, empty, enabled, indeterminate, read-only, read-write, only-child, first-of-type, last-of-type, only-of-type, before, after, selection, marker, first-line, first-letter — all available as variant prefixes.',
       },
     ],
     codeBlocks: [
-      { title: 'postcss.config.js (before)', code: `import { aerocraftPlugin } from '@forgedevstack/aerocraft/postcss';
-import bearVariants from './postcss-bear-variants.cjs';
-import config from './aerocraft.config.js';
+      { title: 'Plugin system (aerocraft.config.js)', code: `import { defineConfig } from '@forgedevstack/aerocraft';
 
-export default {
-  plugins: [
-    aerocraftPlugin(config),
-    bearVariants({ content: config.content }),  // extra plugin
-  ],
-};`, language: 'typescript' },
-      { title: 'postcss.config.js (after — v1.0.3)', code: `import { aerocraftPlugin } from '@forgedevstack/aerocraft/postcss';
-import config from './aerocraft.config.js';
+function myPlugin({ addUtilities, addComponents }) {
+  addUtilities({
+    '.scrollbar-hide': {
+      '-ms-overflow-style': 'none',
+      'scrollbar-width': 'none',
+    },
+  });
+  addComponents({
+    '.btn-gradient': {
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      color: '#fff',
+      padding: '0.5rem 1rem',
+      'border-radius': '0.5rem',
+    },
+  });
+}
 
-export default {
-  plugins: [aerocraftPlugin(config)],  // that's it
-};`, language: 'typescript' },
+export default defineConfig({
+  plugins: [myPlugin],
+});`, language: 'typescript' },
+      { title: 'New variants in action', code: `<!-- Container queries -->
+<div class="container-type-[inline-size]">
+  <div class="@container:bear-flex-col @container:bear-p-4">…</div>
+</div>
+
+<!-- Print styling -->
+<nav class="print:bear-hidden">…</nav>
+
+<!-- Accessibility -->
+<div class="aria-selected:bear-bg-blue-100" aria-selected="true">…</div>
+<input class="peer-invalid:bear-border-red-500" />
+
+<!-- Motion -->
+<div class="motion-reduce:bear-transition-none">…</div>
+
+<!-- Feature detection -->
+<div class="supports-grid:bear-grid supports-grid:bear-grid-cols-3">…</div>`, language: 'html' },
     ],
     shortcuts: [
-      { example: 'dark:bear-bg-zinc-900', note: 'Built-in dark variant' },
-      { example: 'hover:bear-bg-primary-600', note: 'Built-in hover variant' },
-      { example: 'dark:hover:bear-text-white', note: 'Compound variant' },
-      { example: 'bear-btn-primary', note: 'Component recipe' },
-      { example: 'bear-input-pill', note: 'Input recipe' },
-      { example: 'bear-card-hover', note: 'Card recipe' },
+      { example: '@container:bear-flex-col', note: 'Container query variant' },
+      { example: 'print:bear-hidden', note: 'Print media variant' },
+      { example: 'aria-selected:bear-bg-blue-500', note: 'ARIA attribute variant' },
+      { example: 'peer-checked:bear-bg-green-100', note: 'Peer checked variant' },
+      { example: 'ring-2', note: 'First-class ring utility' },
+      { example: 'divide-y', note: 'Divide utility' },
+      { example: 'motion-reduce:bear-transition-none', note: 'Reduced motion variant' },
+      { example: 'supports-grid:bear-grid', note: 'Feature detection variant' },
     ],
   },
 
