@@ -34,7 +34,7 @@ export const DOCS_NAV_EN: Messages['docsNav'] = {
   'getting-started/postcss': 'PostCSS setup',
   'getting-started/cli': 'AeroCraft CLI',
   'getting-started/cursor-plugin': 'Cursor plugin',
-  'getting-started/whats-new': "What's new in 1.0.5",
+  'getting-started/whats-new': "What's new in 1.0.6",
   'getting-started/upgrade-guide': 'Upgrade guide',
   'core-concepts': 'Core concepts',
   'core-concepts/dark-mode': 'Dark mode',
