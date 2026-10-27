@@ -248,11 +248,15 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
   },
   'getting-started/upgrade-guide': {
     title: 'Upgrade guide',
-    lead: 'Patch releases keep config compatible. Review the CHANGELOG on GitHub before minor bumps. Highlights for 1.0.6 below.',
+    lead: '1.2.0 adds two groups Tailwind core does not ship. Config from 1.0.6 still works. Regenerate CSS after the bump.',
     sections: [
       {
         title: 'npm',
-        body: 'Bump to @forgedevstack/aerocraft@1.0.6 and run your build. Regenerate CSS if you commit emitted output.',
+        body: 'Bump to @forgedevstack/aerocraft@1.2.0 and run your build. Regenerate CSS if you commit emitted output. horizon and recipes are on by default.',
+      },
+      {
+        title: '1.2.0',
+        body: 'New classes live in the horizon group (scroll timelines, field-sizing, safe area, masonry, anchor positioning, margin trim, scroll markers, and more) and the recipes group (stack, cluster, sidebar, switcher, cover, frame, reel, center, grid-fit, pancake, imposter, repel, dock, and with-footer). Turn a group off with groups: { horizon: false }. Reference pages are under Docs → Beyond Tailwind and Layout recipes.',
       },
       {
         title: '1.0.6 behavioral notes',
@@ -264,7 +268,7 @@ export const DOCS_SITE_PAGES_EN: Record<string, DocsSitePage> = {
       },
     ],
     shortcuts: [
-      { example: 'npm i @forgedevstack/aerocraft@1.0.6', note: 'Upgrade package' },
+      { example: 'npm i @forgedevstack/aerocraft@1.2.0', note: 'Upgrade package' },
     ],
   },
   'core-concepts/dark-mode': {
@@ -947,12 +951,28 @@ export default defineConfig({
   /* ── release notes ─────────────────────────────────────────────── */
 
   'getting-started/whats-new': {
-    title: "What's new in AeroCraft 1.0.6",
-    lead: 'Unified default palette, fixed gradients and space-x/y, molten runtime (Typed OM), Vitest regression suite, publish CI, and docs synced with native variants from 1.0.3–1.0.5.',
+    title: "What's new in AeroCraft 1.2.0",
+    lead: 'Two new groups for CSS Tailwind core does not ship as utilities: horizon (modern CSS) and recipes (finished layouts in one class). Everything from 1.0.6 stays. Each class has its own reference page under Beyond Tailwind or Layout recipes.',
     sections: [
       {
-        title: 'Unified default palette',
-        body: 'DEFAULT_THEME_COLORS is now the single source of truth for zinc, gray, slate, neutral, red, green, blue, yellow, orange, amber, emerald, cyan, purple, pink (+ white/black). Theme utilities, scanner colors, and ring/divide helpers all derive from it. Gray is true gray — no more slate hex under the gray name.',
+        title: 'Horizon',
+        body: 'scroll-fade, scroll-timeline, view-timeline, field-content, field-fixed, text-box-trim, initial-letter, scrollbar-thin, scrollbar-none, scrollbar-stable, scrollbar-both, safe-p and the safe-p edges, scheme-light-dark, interpolate-size, corner-round, corner-squircle, corner-bevel, sibling-step, contrast-auto, reading-flex, reading-grid, masonry, content-auto, contain-strict, anchor-pop, anchor-to-pop, view-transition-root, tap-clear, fluid-text, hyphens-auto, overlay-none, and scroll-target.',
+      },
+      {
+        title: 'More horizon',
+        body: 'margin-trim drops the extra margin at the ends of a stack. transition-discrete lets display and other discrete properties animate. anim-replace, anim-add, and anim-accumulate set animation-composition. timeline-scope names a shared timeline. clip-margin clips overflow with a margin. anchor-visible hides a popover when its anchor leaves, and anchor-size copies the anchor width. text-autospace, range-standard, range-constrained, appearance-base, caret-block, scroll-markers, interest-delay, view-pair, collapse-space, and ruby-over cover the rest of the modern CSS set.',
+      },
+      {
+        title: 'Layout recipes',
+        body: 'stack, cluster, sidebar, switcher, cover, frame, reel, center, and grid-fit. One class is the whole layout. switcher wraps to a stack when children would get narrower than 20rem. sidebar keeps a 16rem track and wraps under the content.',
+      },
+      {
+        title: 'More recipes',
+        body: 'pancake is a header, a growing middle, and a footer. imposter centers itself inside a positioned parent. repel pushes the first and last items apart. dock is a fixed bottom bar that pads for the safe area. frame-square and frame-story are 1:1 and 9:16 frames. icon sits on the text line. with-footer pins the last child to the bottom of a column.',
+      },
+      {
+        title: 'Still in 1.0.6',
+        body: 'DEFAULT_THEME_COLORS is the single source of truth for zinc, gray, slate, neutral, red, green, blue, yellow, orange, amber, emerald, cyan, purple, pink (+ white/black). Theme utilities, scanner colors, and ring/divide helpers all derive from it. Gray is true gray.',
       },
       {
         title: 'Gradient composition fixed',
@@ -989,9 +1009,9 @@ applyStyle(el, { width: 120, opacity: { value: 0.8, unit: 'number' } });`,
       },
     ],
     shortcuts: [
-      { example: 'bear-space-x-4', note: 'Sibling spacing (not gap)' },
-      { example: 'bear-from-blue-500', note: 'Gradient stop (--ac-gradient-from)' },
-      { example: 'dark:bear-bg-zinc-900', note: 'Native dark variant' },
+      { example: 'bear-scroll-fade', note: 'Fades the ends of a scrollport' },
+      { example: 'bear-pancake', note: 'Header, growing middle, footer' },
+      { example: 'bear-margin-trim', note: 'Trims edge margins in a stack' },
     ],
   },
 

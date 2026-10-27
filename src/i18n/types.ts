@@ -232,6 +232,8 @@ export interface Messages {
       cursor: string;
       transition: string;
       interactive: string;
+      horizon: string;
+      recipes: string;
     };
     columns: {
       shortcut: string;

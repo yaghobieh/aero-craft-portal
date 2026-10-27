@@ -84,6 +84,8 @@ export const GROUP_ICON: Record<string, ReactNode> = {
   cursor: <BearIcons.MouseIcon size="xs" />,
   transition: <BearIcons.ZapIcon size="xs" />,
   interactive: <BearIcons.DragHandleIcon size="xs" />,
+  horizon: <BearIcons.ZapIcon size="xs" />,
+  recipes: <BearIcons.LayersIcon size="xs" />,
 };
 
 export function isGroupSlug(s: string | undefined): s is (typeof GROUP_ORDER)[number] {
