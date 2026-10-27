@@ -7,6 +7,7 @@ import type {
   ResponsiveBlock,
 } from '../components/UtilityReference/UtilityReference.types';
 import type { PortalCategoryId } from '../constants/portalCategories.const';
+import { ALL_SHORTCUTS } from '@forgedevstack/aerocraft';
 import { PORTAL_CATEGORIES, getPrevNext } from '../constants/portalCategories.const';
 import { getAutoShortcutsForProperty } from './referenceShortcuts';
 
@@ -1937,9 +1938,32 @@ export const REFERENCE_CATALOG: Record<string, CatalogEntry> = {
   }),
 };
 
+const BEYOND_GROUPS = ['horizon', 'recipes'] as const;
+
+function stylesOf(css: Record<string, string>): string {
+  return Object.entries(css).map(([key, value]) => `${key}: ${value};`).join(' ');
+}
+
+function entryFromShortcut(slug: string): CatalogEntry | undefined {
+  for (const group of BEYOND_GROUPS) {
+    const shortcut = ALL_SHORTCUTS[group]?.[slug];
+    if (!shortcut) continue;
+    const nested = shortcut.nestedCss
+      ? ` ${shortcut.nestedSelector ?? ''} { ${stylesOf(shortcut.nestedCss)} }`
+      : '';
+    return simpleEntry({
+      slug,
+      category: group,
+      description: shortcut.description,
+      classes: [{ name: shortcut.name, styles: `${stylesOf(shortcut.css)}${nested}` }],
+    });
+  }
+  return undefined;
+}
+
 // Build UtilityReferencePageProps for a slug by combining catalog data + prev/next auto-wiring.
 export function buildPropsFromCatalog(slug: string): UtilityReferencePageProps | undefined {
-  const entry = REFERENCE_CATALOG[slug];
+  const entry = REFERENCE_CATALOG[slug] ?? entryFromShortcut(slug);
   if (!entry) return undefined;
   const { prev, next } = getPrevNext(slug);
   const shortcuts = entry.shortcuts && entry.shortcuts.length > 0
@@ -1968,5 +1992,5 @@ export function buildPropsFromCatalog(slug: string): UtilityReferencePageProps |
 }
 
 export function catalogHasSlug(slug: string): boolean {
-  return slug in REFERENCE_CATALOG;
+  return slug in REFERENCE_CATALOG || entryFromShortcut(slug) !== undefined;
 }

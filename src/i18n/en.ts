@@ -279,6 +279,8 @@ export const en: Messages = {
       cursor: 'Cursor',
       transition: 'Transition',
       interactive: 'Interactive',
+      horizon: 'Beyond Tailwind',
+      recipes: 'Layout recipes',
     },
     columns: {
       shortcut: 'Shortcut Class',

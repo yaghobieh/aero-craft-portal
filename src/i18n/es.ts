@@ -279,6 +279,8 @@ export const es: Messages = {
       cursor: 'Cursor',
       transition: 'Transición',
       interactive: 'Interactivo',
+      horizon: 'Más allá de Tailwind',
+      recipes: 'Recetas de layout',
     },
     columns: {
       shortcut: 'Clase de Atajo',

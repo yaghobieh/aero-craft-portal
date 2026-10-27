@@ -1,3 +1,5 @@
+import { ALL_SHORTCUTS } from '@forgedevstack/aerocraft';
+
 export type PortalCategoryId =
   | 'layout'
   | 'flex'
@@ -14,7 +16,9 @@ export type PortalCategoryId =
   | 'transforms'
   | 'interactivity'
   | 'svg'
-  | 'a11y';
+  | 'a11y'
+  | 'horizon'
+  | 'recipes';
 
 export interface PortalCategory {
   id: PortalCategoryId;
@@ -284,6 +288,16 @@ export const PORTAL_CATEGORIES: PortalCategory[] = [
     id: 'a11y',
     label: 'Accessibility',
     properties: ['forced-color-adjust'],
+  },
+  {
+    id: 'horizon',
+    label: 'Beyond Tailwind',
+    properties: Object.keys(ALL_SHORTCUTS.horizon ?? {}),
+  },
+  {
+    id: 'recipes',
+    label: 'Layout recipes',
+    properties: Object.keys(ALL_SHORTCUTS.recipes ?? {}),
   },
 ];
 

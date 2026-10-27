@@ -18,6 +18,8 @@ const REFERENCE_CATEGORY_LABELS_ES: Record<string, string> = {
   'reference/cat/interactivity': 'Interactividad',
   'reference/cat/svg': 'SVG',
   'reference/cat/a11y': 'Accesibilidad',
+  'reference/cat/horizon': 'Más allá de Tailwind',
+  'reference/cat/recipes': 'Recetas de layout',
 };
 
 const REFERENCE_PROPERTY_LABELS_ES: Record<string, string> = Object.fromEntries(

@@ -18,6 +18,8 @@ const REFERENCE_CATEGORY_LABELS_EN: Record<string, string> = {
   'reference/cat/interactivity': 'Interactivity',
   'reference/cat/svg': 'SVG',
   'reference/cat/a11y': 'Accessibility',
+  'reference/cat/horizon': 'Beyond Tailwind',
+  'reference/cat/recipes': 'Layout recipes',
 };
 
 const REFERENCE_PROPERTY_LABELS_EN: Record<string, string> = Object.fromEntries(
@@ -34,7 +36,7 @@ export const DOCS_NAV_EN: Messages['docsNav'] = {
   'getting-started/postcss': 'PostCSS setup',
   'getting-started/cli': 'AeroCraft CLI',
   'getting-started/cursor-plugin': 'Cursor plugin',
-  'getting-started/whats-new': "What's new in 1.0.6",
+  'getting-started/whats-new': "What's new in 1.2.0",
   'getting-started/upgrade-guide': 'Upgrade guide',
   'core-concepts': 'Core concepts',
   'core-concepts/dark-mode': 'Dark mode',
